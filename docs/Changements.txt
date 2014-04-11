@@ -1,0 +1,9 @@
+Classe Interrupteur
+
+Constructeur :
+Doit soulever une excepetion si on creer un interupteur en dehors de la carte
+
+
+Classe decor 
+
+SUPPRIME

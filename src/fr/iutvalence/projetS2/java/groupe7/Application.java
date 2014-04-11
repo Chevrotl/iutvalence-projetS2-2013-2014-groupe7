@@ -1,3 +1,4 @@
+package fr.iutvalence.projetS2.java.groupe7;
 
 public class Application
 {
