@@ -1,4 +1,7 @@
 package fr.iutvalence.projetS2.java.groupe7;
+
+import java.util.Random;
+
 /**
  * classe représentant un personnage (zombie comme humain)
  * @author Lucas
@@ -150,6 +153,16 @@ public class Personnage
 	public void setPositionPersonnage(Position positionPersonnage)
 	{
 		this.positionPersonnage = positionPersonnage;
+	}
+	
+	
+	public void attaquer(Personnage personnageAttaque, int degatsMaxi)
+	{
+		Random nombreAleatoire = null ;
+		
+		int degatsDeLattaque = nombreAleatoire.nextInt(degatsMaxi) ;
+		 personnageAttaque.setVie((getVie()-degatsDeLattaque)) ;
+		
 	}
 	
 
