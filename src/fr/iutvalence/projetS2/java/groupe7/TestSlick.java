@@ -1,21 +1,18 @@
 package fr.iutvalence.projetS2.java.groupe7;
 
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
 
 public class TestSlick extends BasicGame
 {
 
+	TiledMap map ;
+	
 	public TestSlick()
 	{
 		super("TestSlick");
@@ -26,7 +23,7 @@ public class TestSlick extends BasicGame
 	public void render(GameContainer container, Graphics g) throws SlickException
 	{
 		// TODO Auto-generated method stub
-		g.drawString("Slick marche, c'est un miracle ! Maintenant il reste plus qu'a bosser", 0, 100);
+	//	this.map.render(0, 0);
 		
 		
 	}
@@ -35,6 +32,8 @@ public class TestSlick extends BasicGame
 	public void init(GameContainer container) throws SlickException
 	{
 		// TODO Auto-generated method stub
+		
+	//	this.map = new TiledMap("graphismes/maps/Desert/desert.tmx");
 		
 	}
 
