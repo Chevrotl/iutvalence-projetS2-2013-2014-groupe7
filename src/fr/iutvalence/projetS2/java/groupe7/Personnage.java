@@ -1,7 +1,5 @@
 package fr.iutvalence.projetS2.java.groupe7;
 
-import java.util.Random;
-
 import org.newdawn.slick.Animation;
 
 /**
@@ -55,19 +53,21 @@ public class Personnage
 	/**
 	 * Booleen pour savoir si le personnage est en mouvement ou non / partie graphique
 	 */
-	public boolean estEnMouvement ; 
+	public boolean estEnMouvement = false  ;
 	
 	/**
-	 * Tableau d'animation, necessaire pour l'animation du sprite du personnage / partie graphique
+	 * l'animation d'un sprited'un personnage
 	 */
-	protected Animation[] animationsMouvements = new Animation[3];
+	protected Animation[] animationSprite = new Animation[8];
+	
+
 	
 	
 	/**
 	 * constructeur general, ou l'on attribut seulement une orientaion et une position au personnage crée
 	 * @param x position X
 	 * @param y position Y
-	 * @param orientation
+	 * @param orientation orientation du personnage lors de sa creation
 	 */
 	public Personnage(float x, float y, Orientation orientation)
 	{
@@ -171,26 +171,37 @@ public class Personnage
 		this.positionPersonnage = positionPersonnage;
 	}
 	
+	/**
+	 * accesseur en ecriture de la position X du personnage
+	 * @param x position.X
+	 */
 	public void setPositionPersonnageX(float x)
 	{
 		this.positionPersonnage.X = x;
 	}
 	
+	/**
+	 * accesseur en ecriture de la position X du personnage
+	 * @param y position.Y
+	 */
 	public void setPositionPersonnageY(float y)
 	{
 		this.positionPersonnage.Y = y;
 	}
 	
-	
-	
-	public void attaquer(Personnage personnageAttaque, int degatsMaxi)
+/**
+ * accesseur en lecture du tableau d'animation du sprite
+ * @return animationSprite
+ */
+	public Animation[] getAnimationSprite()
 	{
-		Random nombreAleatoire = null ;
-		
-		int degatsDeLattaque = nombreAleatoire.nextInt(degatsMaxi) ;
-		 personnageAttaque.setVie((getVie()-degatsDeLattaque)) ;
-		
+		return this.animationSprite;
 	}
+
+
+
+	
+	
 	
 
 

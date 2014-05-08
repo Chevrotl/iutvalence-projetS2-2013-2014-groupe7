@@ -6,9 +6,17 @@
  <tileset firstgid="241" name="Dungeon_A5" tilewidth="32" tileheight="32">
   <image source="textures/Dungeon_A5.png" width="256" height="512"/>
  </tileset>
+ <tileset firstgid="369" name="TuilesBLoc" tilewidth="32" tileheight="32">
+  <image source="textures/TuilesBLoc.png" width="160" height="160"/>
+ </tileset>
  <layer name="Calque de Tile 1" width="17" height="13">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC1vOwMCwHAc+DsQn8MjD8HYgvo4H3yAgvx2Kn+PBLwjIw8xQYiQfH6eCGdepYMZzKpgBwoPBDGrEy2Ay4zgVMAD8lvsWdAMAAA==
+  </data>
+ </layer>
+ <layer name="bloc" width="17" height="13">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGBygkJE6mBpuGA5mwMwZaDMGS3hQ0wxKMQBj8rrxdAMAAA==
   </data>
  </layer>
 </map>
