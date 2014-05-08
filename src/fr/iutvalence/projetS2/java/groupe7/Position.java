@@ -12,12 +12,12 @@ public class Position
 	/**
 	 * Type position X (horizontal)
 	 */
-	public static int X ;
+	public static float X ;
 	
 	/**
-	 * type poistion Y (vertical)
+	 * type position Y (vertical)
 	 */
-	public static int Y ;
+	public static float Y ;
 	
 	
 }

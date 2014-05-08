@@ -2,6 +2,8 @@ package fr.iutvalence.projetS2.java.groupe7;
 
 import java.util.Random;
 
+import org.newdawn.slick.Animation;
+
 /**
  * classe représentant un personnage (zombie comme humain)
  * @author Lucas
@@ -49,20 +51,34 @@ public class Personnage
 	 * position du personnage
 	 */
 	private Position positionPersonnage ;
-
+	
+	/**
+	 * Booleen pour savoir si le personnage est en mouvement ou non / partie graphique
+	 */
+	public boolean estEnMouvement ; 
+	
+	/**
+	 * Tableau d'animation, necessaire pour l'animation du sprite du personnage / partie graphique
+	 */
+	protected Animation[] animationsMouvements = new Animation[3];
+	
+	
 	/**
 	 * constructeur general, ou l'on attribut seulement une orientaion et une position au personnage crée
+	 * @param x position X
+	 * @param y position Y
 	 * @param orientation
-	 * @param position
 	 */
-	public Personnage(Position position, Orientation orientation)
+	public Personnage(float x, float y, Orientation orientation)
 	{
 		super();
 		this.orientationPersonnage = orientation;
-		this.positionPersonnage = position;
+		this.positionPersonnage.X = x;
+		this.positionPersonnage.Y= y;
 		this.vie = VIE_PAR_DEFAUT ;
 		this.soinsEnStock = SOIN_EN_STOCK_PAR_DEFAUT ;
 		this.atckSpecialeEnStock = ATCK_SPECIALE_EN_STOCK_PAR_DEFAUT ; 
+		this.estEnMouvement = false ;
 	}
 
 	/**
@@ -155,6 +171,17 @@ public class Personnage
 		this.positionPersonnage = positionPersonnage;
 	}
 	
+	public void setPositionPersonnageX(float x)
+	{
+		this.positionPersonnage.X = x;
+	}
+	
+	public void setPositionPersonnageY(float y)
+	{
+		this.positionPersonnage.Y = y;
+	}
+	
+	
 	
 	public void attaquer(Personnage personnageAttaque, int degatsMaxi)
 	{
@@ -165,6 +192,7 @@ public class Personnage
 		
 	}
 	
+
 
 	
 	

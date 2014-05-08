@@ -11,8 +11,9 @@ import org.newdawn.slick.tiled.TiledMap;
 public class TestSlick extends BasicGame
 {
 
+
 	TiledMap map ;
-	
+
 	public TestSlick()
 	{
 		super("TestSlick");
@@ -23,7 +24,7 @@ public class TestSlick extends BasicGame
 	public void render(GameContainer container, Graphics g) throws SlickException
 	{
 		// TODO Auto-generated method stub
-	//	this.map.render(0, 0);
+		this.map.render(0, 0);
 		
 		
 	}
@@ -33,7 +34,9 @@ public class TestSlick extends BasicGame
 	{
 		// TODO Auto-generated method stub
 		
-	//	this.map = new TiledMap("graphismes/maps/Desert/desert.tmx");
+		this.map  = new TiledMap("graphismes/maps/MapCentrale.tmx");
+		
+
 		
 	}
 
