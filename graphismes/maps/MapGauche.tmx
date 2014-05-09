@@ -14,7 +14,7 @@
    H4sIAAAAAAAAC1vOwMCwHAc+DsQn8MjD8HYgvo4H3yAgvx2Kn+PBLwjIw8xQYiQfH6eCGdepYMZzKpgBwoPBDGrEy2Ay4zgVMAD8lvsWdAMAAA==
   </data>
  </layer>
- <layer name="bloc" width="17" height="13">
+ <layer name="bloc" width="17" height="13" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC2NgGBygkJE6mBpuGA5mwMwZaDMGS3hQ0wxKMQBj8rrxdAMAAA==
   </data>
