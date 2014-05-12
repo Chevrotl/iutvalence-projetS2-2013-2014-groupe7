@@ -26,6 +26,7 @@ public class Jeux extends BasicGame
 	private static final int HAUTEUR_MAP = 416 ; //13 cases
 	private static final int LARGEUR_MAP = 544; //17 cases
 	private static final int NOMBRES_CASES_LARGEUR = LARGEUR_MAP / 32 ;
+	private static final int NOMBRES_CASES_HAUTEUR = HAUTEUR_MAP / 32 ;
 	
 	/**
 	 * Joueur actuel, crée dans l'init 
@@ -66,15 +67,19 @@ public class Jeux extends BasicGame
 		
 		// creation d'une ombre sous les pieds du personnage
 		g.setColor(new Color(0, 0, 0, .5f));
-		//g.fillOval(this.joueur.getPositionPersonnage().X - 10, this.joueur.getPositionPersonnage().Y - 4, 20, 10);		
+		g.fillOval(this.joueur.getPositionPersonnage().X - 10, this.joueur.getPositionPersonnage().Y - 4, 20, 10);		
 		
 		
 		//on baisse l'animation par rapport au coordonnée reelle du personnage pour pouvoir ajuster sa vraie position (en dessous des pieds et non pas en haut a gauche du sprite)
 
 		   g.drawAnimation(this.joueur.getAnimationSprite()[(this.numeroDirection + (this.estMouvant ? 4 : 0))], 
 				   this.joueur.getPositionPersonnage().X-16, this.joueur.getPositionPersonnage().Y-32);
+		   
+		   
 		   g.drawString("X : "+this.joueur.getPositionPersonnage().X+" Y :"+this.joueur.getPositionPersonnage().Y
 				   , 100, 100);
+		   
+		   g.drawString("caseAAteindreY : "+this.caseAAtteindreY, 100, 120);
 	
 	}
 
@@ -87,8 +92,6 @@ public class Jeux extends BasicGame
 		this.map  = new TiledMap("graphismes/maps/MapCentrale.tmx");
 		this.joueur = new Joueur(224,224, Orientation.SUD, "Link") ; 
 		
-
-
 		}
 
 
@@ -103,10 +106,11 @@ public class Jeux extends BasicGame
 		float futurePositionY = this.joueur.getPositionPersonnage().Y ;
 				
 		
-		if(futurePositionY == this.caseAAtteindreY)
+		if((int)futurePositionY == (int)this.caseAAtteindreY)
     	{
-    		this.caseAAtteindreY = this.caseAAtteindreY-32;
-    		this.estMouvant = false ;
+			this.estMouvant = false ;
+    		this.caseAAtteindreY -= 32;
+    		
     		
     	}	
 		
@@ -115,21 +119,10 @@ public class Jeux extends BasicGame
 			    
 		        switch (this.joueur.getOrientationPersonnage()) {
 		        
-		            case NORD: {
-		            		
-		            	 while(futurePositionY != this.caseAAtteindreY)
-		            	 {
-		            	futurePositionY = (this.joueur.getPositionPersonnage().Y -= .1f * delta ); 
-		            	this.joueur.setPositionPersonnageY(futurePositionY);
-		            	break;
-		            	}
-		            	 
-		            	 }
-		            break;
-					
-				case OUEST: futurePositionX = (this.joueur.getPositionPersonnage().X  -= .1f * delta); break;
-		            case SUD: futurePositionY = (this.joueur.getPositionPersonnage().Y += .1f * delta); break;
-		            case EST: futurePositionX = (this.joueur.getPositionPersonnage().X += .1f * delta); break;
+		        case NORD: futurePositionY = (int)(this.joueur.getPositionPersonnage().Y -= .1f * delta);  break;		            				
+				case OUEST: futurePositionX = (int)(this.joueur.getPositionPersonnage().X  -= .1f * delta); break;
+		        case SUD: futurePositionY = (int)(this.joueur.getPositionPersonnage().Y += .1f * delta); break;
+		        case EST: futurePositionX = (int)(this.joueur.getPositionPersonnage().X += .1f * delta); break;
 				default:
 					break;
 		            
