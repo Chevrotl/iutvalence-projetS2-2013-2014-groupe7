@@ -32,7 +32,13 @@ public class Jeux extends BasicGame
 	 */
 	private Joueur joueur ;
 	
-	//provient du blog
+	//utile pour le deplacement case par case, = aux coordonnée de pop du joueur
+	private float caseAAtteindreX = 224 ;
+	private float caseAAtteindreY = 224 ;
+
+	
+	
+	//provient du blog, permet l'animation du sprite
 	private Animation[] animations = new Animation[8];
 	private int numeroDirection = 0 ;
 	
@@ -60,12 +66,16 @@ public class Jeux extends BasicGame
 		
 		// creation d'une ombre sous les pieds du personnage
 		g.setColor(new Color(0, 0, 0, .5f));
-		g.fillOval(this.joueur.getPositionPersonnage().X - 10, this.joueur.getPositionPersonnage().Y - 4, 20, 10);		
+		//g.fillOval(this.joueur.getPositionPersonnage().X - 10, this.joueur.getPositionPersonnage().Y - 4, 20, 10);		
 		
 		
 		//on baisse l'animation par rapport au coordonnée reelle du personnage pour pouvoir ajuster sa vraie position (en dessous des pieds et non pas en haut a gauche du sprite)
 
-		   g.drawAnimation(this.joueur.getAnimationSprite()[(this.numeroDirection + (this.estMouvant ? 4 : 0))], this.joueur.getPositionPersonnage().X-16, this.joueur.getPositionPersonnage().Y-30);
+		   g.drawAnimation(this.joueur.getAnimationSprite()[(this.numeroDirection + (this.estMouvant ? 4 : 0))], 
+				   this.joueur.getPositionPersonnage().X-16, this.joueur.getPositionPersonnage().Y-32);
+		   g.drawString("X : "+this.joueur.getPositionPersonnage().X+" Y :"+this.joueur.getPositionPersonnage().Y
+				   , 100, 100);
+	
 	}
 
 	
@@ -75,7 +85,7 @@ public class Jeux extends BasicGame
 		// TODO Auto-generated method stub
 		
 		this.map  = new TiledMap("graphismes/maps/MapCentrale.tmx");
-		this.joueur = new Joueur(200,200, Orientation.SUD, "Link") ; 
+		this.joueur = new Joueur(224,224, Orientation.SUD, "Link") ; 
 		
 
 
@@ -91,17 +101,37 @@ public class Jeux extends BasicGame
 		 */
 		float futurePositionX = this.joueur.getPositionPersonnage().X ;
 		float futurePositionY = this.joueur.getPositionPersonnage().Y ;
-			
+				
+		
+		if(futurePositionY == this.caseAAtteindreY)
+    	{
+    		this.caseAAtteindreY = this.caseAAtteindreY-32;
+    		this.estMouvant = false ;
+    		
+    	}	
+		
+		
 		  if (this.estMouvant) {
-			  
-			  
-		        
+			    
 		        switch (this.joueur.getOrientationPersonnage()) {
 		        
-		            case NORD: futurePositionY = (this.joueur.getPositionPersonnage().Y -= .1f * delta ); break;
-		            case OUEST: futurePositionX = (this.joueur.getPositionPersonnage().X  -= .1f * delta); break;
+		            case NORD: {
+		            		
+		            	 while(futurePositionY != this.caseAAtteindreY)
+		            	 {
+		            	futurePositionY = (this.joueur.getPositionPersonnage().Y -= .1f * delta ); 
+		            	this.joueur.setPositionPersonnageY(futurePositionY);
+		            	break;
+		            	}
+		            	 
+		            	 }
+		            break;
+					
+				case OUEST: futurePositionX = (this.joueur.getPositionPersonnage().X  -= .1f * delta); break;
 		            case SUD: futurePositionY = (this.joueur.getPositionPersonnage().Y += .1f * delta); break;
 		            case EST: futurePositionX = (this.joueur.getPositionPersonnage().X += .1f * delta); break;
+				default:
+					break;
 		            
 		        }
 		        
@@ -118,7 +148,7 @@ public class Jeux extends BasicGame
 	}
 	
 
-	
+
 	
 
 	/**
@@ -167,11 +197,11 @@ public class Jeux extends BasicGame
 	/**
 	 * methode qui gere le relachement d'une touche
 	 */
-	public void keyReleased(int key, char c)
-	{
-		this.estMouvant = false ;
-	}
-	
+//	public void keyReleased(int key, char c)
+//	{
+//		this.estMouvant = false ;
+//	}
+//	
 	
 	
 	public static void main(String[] args)
