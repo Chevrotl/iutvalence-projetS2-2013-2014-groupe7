@@ -35,7 +35,7 @@ public class Jeux extends BasicGame
 
 	private Zombie zombie ;
 
- 
+
 	//utile pour le deplacement case par case, = aux coordonnée de pop du joueur
 	private float caseAAtteindreXEst = 224 ;
 	private float caseAAtteindreXOuest = 224 ;
@@ -54,6 +54,8 @@ public class Jeux extends BasicGame
 
 
 	private boolean estMouvant ;
+	private boolean zombiesMouvants ;
+	
 	/**
 	 * map actuelle
 	 */
@@ -84,15 +86,15 @@ public class Jeux extends BasicGame
 
 		g.drawAnimation(this.joueur.getAnimationSprite()[(this.numeroDirection + (this.estMouvant ? 4 : 0))], 
 				this.joueur.x-16, this.joueur.y-32);
-		
-		
+
+
 		g.drawAnimation(this.zombie.getAnimationSprite()[(this.numeroDirection + (this.estMouvant ? 4 : 0))], 
-				this.zombie.x,this.zombie.y);
-		
-		
-		
-		
-		
+				this.zombie.x-16,this.zombie.y-32);
+
+
+
+
+
 		//debugueur, permet d'afficher des variables
 		if(this.debogueurActive)
 		{
@@ -106,8 +108,7 @@ public class Jeux extends BasicGame
 			g.drawString("caseAAteindreYSud : "+this.caseAAtteindreYSud, 20, 80);
 			g.drawString("caseAAteindreXEst : "+this.caseAAtteindreXEst, 20, 100);
 			g.drawString("caseAAteindreXOuest : "+this.caseAAtteindreXOuest, 20, 120);
-			g.drawString("aDejaBougeX : "+this.aDejaBougeX,20,140);
-			g.drawString("aDejaBougeY : "+this.aDejaBougeY,20,160);
+			
 
 		}
 
@@ -120,13 +121,13 @@ public class Jeux extends BasicGame
 		// TODO Auto-generated method stub
 
 		this.map  = new TiledMap("graphismes/maps/MapCentrale.tmx");
-		
+
 		this.zombie = new Zombie(100, 100, Orientation.EST);
-		
+
 		this.joueur = new Joueur(224,224, Orientation.SUD, "Link") ; 
-		
-		
-		
+
+
+
 	}
 
 
@@ -157,7 +158,7 @@ public class Jeux extends BasicGame
 					//comme la position est de type float, la valeur n'est pas ronde, cela crée des problemes pour pouvoir se deplacer correctement.
 					//on remet la position du personnage a jour pour eviter tout probleme
 					this.joueur.setPositionPersonnageY(this.caseAAtteindreYSud);
-					
+
 
 				}
 				else
@@ -245,15 +246,22 @@ public class Jeux extends BasicGame
 
 			}
 
+			//detection des collision pour le joueur humain
 			if(!estUneCaseInterdite(futurePositionX, futurePositionY))
 			{
 				this.joueur.setPositionPersonnageX(futurePositionX);
 				this.joueur.setPositionPersonnageY(futurePositionY);
+
+
 			}
 			else
 			{
 				this.estMouvant = false ;
-			}}
+			}
+
+	
+		}
+
 
 	}
 
@@ -295,7 +303,7 @@ public class Jeux extends BasicGame
 	{
 
 		switch(key){
-		case Input.KEY_UP:    this.joueur.setOrientationPersonnage(Orientation.NORD);this.estMouvant = true ; this.numeroDirection = 0;break;
+		case Input.KEY_UP:    this.joueur.setOrientationPersonnage(Orientation.NORD);this.estMouvant = true ;  this.numeroDirection = 0;break;
 		case Input.KEY_LEFT:  this.joueur.setOrientationPersonnage(Orientation.OUEST);this.estMouvant = true ; this.numeroDirection = 1;  break;
 		case Input.KEY_DOWN:  this.joueur.setOrientationPersonnage(Orientation.SUD);this.estMouvant = true ; this.numeroDirection = 2;  break;
 		case Input.KEY_RIGHT: this.joueur.setOrientationPersonnage(Orientation.EST);this.estMouvant = true ; this.numeroDirection = 3; break;

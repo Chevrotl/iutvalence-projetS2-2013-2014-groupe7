@@ -1,5 +1,7 @@
 package fr.iutvalence.projetS2.java.groupe7;
 
+import java.util.Random;
+
 import org.newdawn.slick.Animation;
 
 /**
@@ -64,7 +66,7 @@ public class Personnage
 	protected float x ;
 	protected float y ;
 	
-	
+
 	/**
 	 * constructeur general, ou l'on attribut seulement une orientaion et une position au personnage crée
 	 * @param x position X
@@ -217,9 +219,43 @@ public class Personnage
 		return this.animationSprite;
 	}
 
-	public Position deplacementAleatoire(float x, float y)
-	{
-		return null;
+	/**
+	 * deplace aleatoirement soit Y, soit X
+	 * @return une position avec juste des coordonnée d'une case différente
+	 */
+	public Position deplacementAleatoire()
+	{ 
+		Position positionARenvoyer = new Position();
+		
+		boolean nombreAleatoire1 = new Random().nextBoolean() ;
+		boolean nombreAleatoire2 = new Random().nextBoolean() ;
+		
+		if(nombreAleatoire1)
+		{
+			if(nombreAleatoire2)
+			{
+				positionARenvoyer.X += 32 ;
+				
+			}
+			else
+			{
+				positionARenvoyer.X -= 32 ;
+			}
+		}
+		else
+		{
+			if(nombreAleatoire2)
+			{
+				positionARenvoyer.Y += 32 ;
+			}
+			else
+			{
+				positionARenvoyer.Y -= 32 ;
+			}
+		}
+		return positionARenvoyer ;
+		
+		
 	}
 
 		
