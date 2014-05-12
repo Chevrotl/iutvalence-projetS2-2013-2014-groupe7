@@ -34,10 +34,15 @@ public class Jeux extends BasicGame
 	private Joueur joueur ;
 	
 	//utile pour le deplacement case par case, = aux coordonnée de pop du joueur
-	private float caseAAtteindreX = 224 ;
-	private float caseAAtteindreY = 224 ;
-
+	private float caseAAtteindreXEst = 224 ;
+	private float caseAAtteindreXOuest = 224 ;
+	private float caseAAtteindreYNord = 224 ;
+	private float caseAAtteindreYSud = 224 ; 
 	
+	//lors du premier deplacement sur la carte, les coordonnée du deplacement ne se modifient pas de la meme maniere
+	//on est oblige de separer le premier deplacement des autres
+	private boolean aDejaBougeX = false;
+	private boolean aDejaBougeY = false;
 	
 	//provient du blog, permet l'animation du sprite
 	private Animation[] animations = new Animation[8];
@@ -50,6 +55,8 @@ public class Jeux extends BasicGame
 	 * map actuelle
 	 */
 	TiledMap map ;
+	
+	private boolean debogueurActive;
 
 	public Jeux()
 	{
@@ -75,11 +82,21 @@ public class Jeux extends BasicGame
 		   g.drawAnimation(this.joueur.getAnimationSprite()[(this.numeroDirection + (this.estMouvant ? 4 : 0))], 
 				   this.joueur.getPositionPersonnage().X-16, this.joueur.getPositionPersonnage().Y-32);
 		   
+		   //debugueur, permet d'afficher des variables
+		   if(this.debogueurActive)
+		   {
+			   Color colorPoliceDebug = new Color((float)0.8, 0, 0);
+			   g.setColor(colorPoliceDebug);
+		  
+			   g.drawString("X : "+this.joueur.getPositionPersonnage().X+" Y :"+this.joueur.getPositionPersonnage().Y , 20, 40);
 		   
-		   g.drawString("X : "+this.joueur.getPositionPersonnage().X+" Y :"+this.joueur.getPositionPersonnage().Y
-				   , 100, 100);
-		   
-		   g.drawString("caseAAteindreY : "+this.caseAAtteindreY, 100, 120);
+		   g.drawString("caseAAteindreYNord : "+this.caseAAtteindreYNord, 20, 60);
+		   g.drawString("caseAAteindreYSud : "+this.caseAAtteindreYSud, 20, 80);
+		   g.drawString("caseAAteindreXEst : "+this.caseAAtteindreXEst, 20, 100);
+		   g.drawString("caseAAteindreXOuest : "+this.caseAAtteindreXOuest, 20, 120);
+		   g.drawString("aDejaBougeX : "+this.aDejaBougeX,20,140);
+		   g.drawString("aDejaBougeY : "+this.aDejaBougeY,20,160);
+		   }
 	
 	}
 
@@ -106,23 +123,100 @@ public class Jeux extends BasicGame
 		float futurePositionY = this.joueur.getPositionPersonnage().Y ;
 				
 		
-		if((int)futurePositionY == (int)this.caseAAtteindreY)
-    	{
-			this.estMouvant = false ;
-    		this.caseAAtteindreY -= 32;
-    		
-    		
-    	}	
+		
+		//calcul des coordonnée pour le deplacement case par case
+		
+		switch(this.joueur.getOrientationPersonnage())
+		{
+		case NORD: {
+			if((int)futurePositionY == (int)this.caseAAtteindreYNord)
+	    	{
+				if(this.aDejaBougeY)
+				{
+					this.estMouvant = false ;
+					this.caseAAtteindreYNord -= 32;
+		    		this.caseAAtteindreYSud -= 32 ;
+		    	
+				}
+				else
+				{
+					this.estMouvant = false ;
+					this.caseAAtteindreYNord -= 32;
+					//les coordonnée de la case a atteindre sud ne change pas du coup
+					this.aDejaBougeY = true;
+				}
+	    	}	
+		}break;
+		case OUEST: {
+			if((int)futurePositionX == (int)this.caseAAtteindreXOuest)
+	    	{
+				if(this.aDejaBougeX)
+				{
+					this.estMouvant = false ;
+					this.caseAAtteindreXEst -= 32;
+					this.caseAAtteindreXOuest -= 32;
+				}
+				else
+				{
+					this.estMouvant = false ;
+					this.caseAAtteindreXOuest -= 32;
+					this.aDejaBougeX = true ;
+				}
+	    	}
+		}break;
+		
+			case SUD: {
+				if((int)futurePositionY == (int)this.caseAAtteindreYSud)
+		    	{
+					if(this.aDejaBougeY)
+					{
+						this.estMouvant = false ;
+						this.caseAAtteindreYNord += 32;
+			    		this.caseAAtteindreYSud += 32 ;
+			    	
+					}
+					else
+					{
+						this.estMouvant = false ;
+						this.caseAAtteindreYSud += 32;
+						this.aDejaBougeY = true;;
+					}
+		    	}	
+			}break;
+			case EST: {
+				if((int)futurePositionX == (int)this.caseAAtteindreXEst)
+		    	{
+					if(this.aDejaBougeX)
+					{
+						this.estMouvant = false ;
+						this.caseAAtteindreXEst += 32;
+						this.caseAAtteindreXOuest += 32;
+					}
+					else
+					{
+						this.estMouvant = false ;
+						this.caseAAtteindreXEst += 32;
+						this.aDejaBougeX = true ;
+					}
+		    	
+		    	}
+			}break;
+		}
+	
+		
+		
+		
+	
 		
 		
 		  if (this.estMouvant) {
 			    
 		        switch (this.joueur.getOrientationPersonnage()) {
 		        
-		        case NORD: futurePositionY = (int)(this.joueur.getPositionPersonnage().Y -= .1f * delta);  break;		            				
-				case OUEST: futurePositionX = (int)(this.joueur.getPositionPersonnage().X  -= .1f * delta); break;
-		        case SUD: futurePositionY = (int)(this.joueur.getPositionPersonnage().Y += .1f * delta); break;
-		        case EST: futurePositionX = (int)(this.joueur.getPositionPersonnage().X += .1f * delta); break;
+		        case NORD: futurePositionY = (this.joueur.getPositionPersonnage().Y -= .1f * delta);  break;		            				
+				case OUEST: futurePositionX = (this.joueur.getPositionPersonnage().X  -= .1f * delta); break;
+		        case SUD: futurePositionY = (this.joueur.getPositionPersonnage().Y += .1f * delta); break;
+		        case EST: futurePositionX = (this.joueur.getPositionPersonnage().X += .1f * delta); break;
 				default:
 					break;
 		            
@@ -184,6 +278,15 @@ public class Jeux extends BasicGame
         case Input.KEY_DOWN:  this.joueur.setOrientationPersonnage(Orientation.SUD);this.estMouvant = true ; this.numeroDirection = 2;  break;
         case Input.KEY_RIGHT: this.joueur.setOrientationPersonnage(Orientation.EST);this.estMouvant = true ; this.numeroDirection = 3; break;
         
+        case Input.KEY_F2 : { if(this.debogueurActive)
+        {
+        	this.debogueurActive = false ; break;
+        }
+        else 
+        {
+        	this.debogueurActive = true ; break;
+        }
+        }
         case Input.KEY_ESCAPE: System.exit(0);
 		}
 	}
