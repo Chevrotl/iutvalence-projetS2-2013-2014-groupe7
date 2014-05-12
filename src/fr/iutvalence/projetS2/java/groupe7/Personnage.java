@@ -61,6 +61,8 @@ public class Personnage
 	protected Animation[] animationSprite = new Animation[8];
 	
 
+	protected float x ;
+	protected float y ;
 	
 	
 	/**
@@ -75,6 +77,8 @@ public class Personnage
 		this.orientationPersonnage = orientation;
 		this.positionPersonnage.X = x;
 		this.positionPersonnage.Y= y;
+		this.x = x ;
+		this.y = y;
 		this.vie = VIE_PAR_DEFAUT ;
 		this.soinsEnStock = SOIN_EN_STOCK_PAR_DEFAUT ;
 		this.atckSpecialeEnStock = ATCK_SPECIALE_EN_STOCK_PAR_DEFAUT ; 
@@ -162,6 +166,17 @@ public class Personnage
 		return this.positionPersonnage;
 	}
 
+	public float getPositionPersonnageX()
+	{
+		return this.x ;
+	}
+	
+	public float getPositionPersonnageY()
+	{
+		return this.y ;
+	}
+	
+	
 	/**
 	 * accesseur en ecriture de l'attribut de la position du personnage
 	 * @param positionPersonnage position future du personnage
@@ -169,6 +184,8 @@ public class Personnage
 	public void setPositionPersonnage(Position positionPersonnage)
 	{
 		this.positionPersonnage = positionPersonnage;
+		x = positionPersonnage.X ;
+		y = positionPersonnage.Y ;
 	}
 	
 	/**
@@ -178,6 +195,7 @@ public class Personnage
 	public void setPositionPersonnageX(float x)
 	{
 		this.positionPersonnage.X = x;
+		this.x = x;
 	}
 	
 	/**
@@ -187,6 +205,7 @@ public class Personnage
 	public void setPositionPersonnageY(float y)
 	{
 		this.positionPersonnage.Y = y;
+		this.y = y ;
 	}
 	
 /**
@@ -198,14 +217,12 @@ public class Personnage
 		return this.animationSprite;
 	}
 
+	public Position deplacementAleatoire(float x, float y)
+	{
+		return null;
+	}
 
-
-	
-	
-	
-
-
-	
+		
 	
 	
 	

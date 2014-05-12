@@ -7,7 +7,7 @@ import org.newdawn.slick.SpriteSheet;
 
 /**
  * Classe representant un zombie, c'est un personnage non jouable
- * @author Timothée
+ * @author Timothï¿½e
  *
  *
  */ 
@@ -33,7 +33,7 @@ public class Zombie extends Personnage
 		// On test directement dans le constructeur la validite du sprite
 		try
 		{
-			this.spriteZombie = new SpriteSheet("/graphismes/sprites/PersonnagePrincipal.png", 32, 32);
+			this.spriteZombie = new SpriteSheet("/graphismes/sprites/zombi.png", 32, 32);
 			
 			for(int numDirection = 0; numDirection<this.animationSprite.length ; numDirection++)
 			{
@@ -62,7 +62,7 @@ public class Zombie extends Personnage
 		
 		//Nord, immobile
 		case 0: { 
-			animationARenvoyer.addFrame(this.spriteZombie.getSprite(1, 1), 100); 
+			animationARenvoyer.addFrame(this.spriteZombie.getSprite(1, 3), 100); 
 			return animationARenvoyer;
 		}
 		//Ouest, immobile
@@ -111,5 +111,8 @@ public class Zombie extends Personnage
 		}
 		return null;
 	}
-		
+
+	
+	
+	
 }
