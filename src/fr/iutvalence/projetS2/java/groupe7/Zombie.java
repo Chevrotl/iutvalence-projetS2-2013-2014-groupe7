@@ -9,7 +9,7 @@ import org.newdawn.slick.SpriteSheet;
  * Classe representant un zombie, c'est un personnage non jouable
  * @author Timothée
  *
- */
+ */ 
 
 public class Zombie extends Personnage
 {
