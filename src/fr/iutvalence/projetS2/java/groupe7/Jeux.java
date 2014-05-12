@@ -136,6 +136,9 @@ public class Jeux extends BasicGame
 					this.estMouvant = false ;
 					this.caseAAtteindreYNord -= 32;
 		    		this.caseAAtteindreYSud -= 32 ;
+		    		//comme la position est de type float, la valeur n'est pas ronde, cela crée des problemes pour pouvoir se deplacer correctement.
+		    		//on remet la position du personnage a jour pour eviter tout probleme
+		    		this.joueur.setPositionPersonnageY(this.caseAAtteindreYSud);
 		    	
 				}
 				else
@@ -147,6 +150,7 @@ public class Jeux extends BasicGame
 				}
 	    	}	
 		}break;
+		
 		case OUEST: {
 			if((int)futurePositionX == (int)this.caseAAtteindreXOuest)
 	    	{
@@ -155,6 +159,7 @@ public class Jeux extends BasicGame
 					this.estMouvant = false ;
 					this.caseAAtteindreXEst -= 32;
 					this.caseAAtteindreXOuest -= 32;
+					this.joueur.setPositionPersonnageX(caseAAtteindreXEst);
 				}
 				else
 				{
@@ -173,6 +178,7 @@ public class Jeux extends BasicGame
 						this.estMouvant = false ;
 						this.caseAAtteindreYNord += 32;
 			    		this.caseAAtteindreYSud += 32 ;
+			    		this.joueur.setPositionPersonnageY(caseAAtteindreYNord);
 			    	
 					}
 					else
@@ -183,6 +189,7 @@ public class Jeux extends BasicGame
 					}
 		    	}	
 			}break;
+			
 			case EST: {
 				if((int)futurePositionX == (int)this.caseAAtteindreXEst)
 		    	{
@@ -191,6 +198,7 @@ public class Jeux extends BasicGame
 						this.estMouvant = false ;
 						this.caseAAtteindreXEst += 32;
 						this.caseAAtteindreXOuest += 32;
+						this.joueur.setPositionPersonnageX(caseAAtteindreXOuest);
 					}
 					else
 					{
@@ -204,11 +212,7 @@ public class Jeux extends BasicGame
 		}
 	
 		
-		
-		
-	
-		
-		
+		//Mouvement fluide
 		  if (this.estMouvant) {
 			    
 		        switch (this.joueur.getOrientationPersonnage()) {
