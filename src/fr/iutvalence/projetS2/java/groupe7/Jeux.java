@@ -23,8 +23,9 @@ public class Jeux extends BasicGame
 {
 
 
-	private static final int HAUTEUR_MAP = 416 ;
-	private static final int LARGEUR_MAP = 544;
+	private static final int HAUTEUR_MAP = 416 ; //13 cases
+	private static final int LARGEUR_MAP = 544; //17 cases
+	private static final int NOMBRES_CASES_LARGEUR = LARGEUR_MAP / 32 ;
 	
 	/**
 	 * Joueur actuel, crée dans l'init 
@@ -93,11 +94,15 @@ public class Jeux extends BasicGame
 			
 		  if (this.estMouvant) {
 			  
+			  
+		        
 		        switch (this.joueur.getOrientationPersonnage()) {
+		        
 		            case NORD: futurePositionY = (this.joueur.getPositionPersonnage().Y -= .1f * delta ); break;
 		            case OUEST: futurePositionX = (this.joueur.getPositionPersonnage().X  -= .1f * delta); break;
 		            case SUD: futurePositionY = (this.joueur.getPositionPersonnage().Y += .1f * delta); break;
 		            case EST: futurePositionX = (this.joueur.getPositionPersonnage().X += .1f * delta); break;
+		            
 		        }
 		        
 		        if(!estUneCaseInterdite(futurePositionX, futurePositionY))
@@ -109,11 +114,12 @@ public class Jeux extends BasicGame
 		        {
 		        	this.estMouvant = false ;
 		        }}
-			        
-		        
-		 
 		
 	}
+	
+
+	
+	
 
 	/**
 	 * Methode permettant de renvoyer un boolean suivant si le personnage a le droit d'aller sur la case
@@ -174,7 +180,7 @@ public class Jeux extends BasicGame
 		{
 			AppGameContainer app = new AppGameContainer(new Jeux()) ; 
 			app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP,false);
-			app.setShowFPS(false);
+			app.setShowFPS(true);
 			app.start();
 		}
 		catch (SlickException e)

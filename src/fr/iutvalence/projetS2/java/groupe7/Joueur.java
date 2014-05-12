@@ -68,7 +68,7 @@ public class Joueur extends Personnage
 		
 		//Nord, immobile
 		case 0: { 
-			animationARenvoyer.addFrame(this.spriteJoueur.getSprite(1, 1), 100); 
+			animationARenvoyer.addFrame(this.spriteJoueur.getSprite(1, 3), 100); 
 			return animationARenvoyer;
 		}
 		//Ouest, immobile
