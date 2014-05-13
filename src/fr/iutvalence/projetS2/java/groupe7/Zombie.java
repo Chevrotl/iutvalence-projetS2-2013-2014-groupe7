@@ -28,6 +28,7 @@ public class Zombie extends Personnage
 	 */
 	public Zombie(float x, float y, Orientation orientation)
 	{
+		
 		super(x,y, orientation);
 		
 		// On test directement dans le constructeur la validite du sprite

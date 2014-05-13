@@ -47,10 +47,7 @@ public class Personnage
 	 */
 	private Orientation orientationPersonnage ;
 	
-	/**
-	 * position du personnage
-	 */
-	private Position positionPersonnage ;
+
 	
 	/**
 	 * Booleen pour savoir si le personnage est en mouvement ou non / partie graphique
@@ -63,11 +60,25 @@ public class Personnage
 	protected Animation[] animationSprite = new Animation[8];
 	
 
+	/** position x du personnage */
 	protected float x ;
+	
+	/** position y du personnage */
 	protected float y ;
 	
+	//utile pour le deplacement case par case, = aux coordonnée de pop du joueur
+		protected float caseAAtteindreXEst  ;
+		protected float caseAAtteindreXOuest  ;
+		protected  float caseAAtteindreYNord  ;
+		protected float caseAAtteindreYSud  ; 
 
-	/**
+		//lors du premier deplacement sur la carte, les coordonnée du deplacement ne se modifient pas de la meme maniere
+		//on est oblige de separer le premier deplacement des autres
+		protected boolean aDejaBougeX = false;
+		protected boolean aDejaBougeY = false;
+		
+		
+		/**
 	 * constructeur general, ou l'on attribut seulement une orientaion et une position au personnage crée
 	 * @param x position X
 	 * @param y position Y
@@ -77,10 +88,12 @@ public class Personnage
 	{
 		super();
 		this.orientationPersonnage = orientation;
-		this.positionPersonnage.X = x;
-		this.positionPersonnage.Y= y;
 		this.x = x ;
 		this.y = y;
+		this.caseAAtteindreXEst = x;
+		this.caseAAtteindreXOuest = x;
+		this.caseAAtteindreYNord = y;
+		this.caseAAtteindreYSud = y ;
 		this.vie = VIE_PAR_DEFAUT ;
 		this.soinsEnStock = SOIN_EN_STOCK_PAR_DEFAUT ;
 		this.atckSpecialeEnStock = ATCK_SPECIALE_EN_STOCK_PAR_DEFAUT ; 
@@ -165,14 +178,22 @@ public class Personnage
 	 */
 	public Position getPositionPersonnage()
 	{
-		return this.positionPersonnage;
+		return new Position(this.x,this.y);
 	}
 
+	/**
+	 * accesseur en lecture position x du personnage
+	 * @return x (position x du personnage)
+	 */
 	public float getPositionPersonnageX()
 	{
 		return this.x ;
 	}
 	
+	/**
+	 * accesseur en lecture position y du personnage
+	 * @return y (position y du personnage)
+	 */
 	public float getPositionPersonnageY()
 	{
 		return this.y ;
@@ -185,9 +206,9 @@ public class Personnage
 	 */
 	public void setPositionPersonnage(Position positionPersonnage)
 	{
-		this.positionPersonnage = positionPersonnage;
-		x = positionPersonnage.X ;
-		y = positionPersonnage.Y ;
+		
+		this.x = positionPersonnage.X ;
+		this.y = positionPersonnage.Y ;
 	}
 	
 	/**
@@ -196,7 +217,6 @@ public class Personnage
 	 */
 	public void setPositionPersonnageX(float x)
 	{
-		this.positionPersonnage.X = x;
 		this.x = x;
 	}
 	
@@ -206,7 +226,6 @@ public class Personnage
 	 */
 	public void setPositionPersonnageY(float y)
 	{
-		this.positionPersonnage.Y = y;
 		this.y = y ;
 	}
 	
@@ -258,6 +277,96 @@ public class Personnage
 		
 	}
 
+	
+	public void  deplacementDUneCase(float futurePositionX, float futurePositionY)
+	{
+		switch(this.getOrientationPersonnage())
+		{
+		case NORD: {
+			if((int)futurePositionY == (int)this.caseAAtteindreYNord)
+			{
+				if(this.aDejaBougeY)
+				{
+					this.estEnMouvement = false ;
+					this.caseAAtteindreYNord -= 32;
+					this.caseAAtteindreYSud -= 32 ;
+					//comme la position est de type float, la valeur n'est pas ronde, cela crée des problemes pour pouvoir se deplacer correctement.
+					//on remet la position du personnage a jour pour eviter tout probleme
+					this.setPositionPersonnageY(this.caseAAtteindreYSud);
+
+
+				}
+				else
+				{
+					this.estEnMouvement = false ;
+					this.caseAAtteindreYNord -= 32;
+					//les coordonnée de la case a atteindre sud ne change pas du coup
+					this.aDejaBougeY = true;
+				}
+			}	
+		}break;
+
+		case OUEST: {
+			if((int)futurePositionX == (int)this.caseAAtteindreXOuest)
+			{
+				if(this.aDejaBougeX)
+				{
+					this.estEnMouvement = false ;
+					this.caseAAtteindreXEst -= 32;
+					this.caseAAtteindreXOuest -= 32;
+					this.setPositionPersonnageX(this.caseAAtteindreXEst);
+				}
+				else
+				{
+					this.estEnMouvement = false ;
+					this.caseAAtteindreXOuest -= 32;
+					this.aDejaBougeX = true ;
+				}
+			}
+		}break;
+
+		case SUD: {
+			if((int)futurePositionY == (int)this.caseAAtteindreYSud)
+			{
+				if(this.aDejaBougeY)
+				{
+					this.estEnMouvement = false ;
+					this.caseAAtteindreYNord += 32;
+					this.caseAAtteindreYSud += 32 ;
+					this.setPositionPersonnageY(this.caseAAtteindreYNord);
+
+				}
+				else
+				{
+					this.estEnMouvement = false ;
+					this.caseAAtteindreYSud += 32;
+					this.aDejaBougeY = true;;
+				}
+			}	
+		}break;
+
+		case EST: {
+			if((int)futurePositionX == (int)this.caseAAtteindreXEst)
+			{
+				if(this.aDejaBougeX)
+				{
+					this.estEnMouvement = false ;
+					this.caseAAtteindreXEst += 32;
+					this.caseAAtteindreXOuest += 32;
+					this.setPositionPersonnageX(this.caseAAtteindreXOuest);
+				}
+				else
+				{
+					this.estEnMouvement = false ;
+					this.caseAAtteindreXEst += 32;
+					this.aDejaBougeX = true ;
+				}
+
+			}
+		}break;
+		}
+
+	}
 		
 	
 	

@@ -8,16 +8,20 @@ package fr.iutvalence.projetS2.java.groupe7;
  */
 public class Position
 {
+	public float X ;
+	public float Y ;
 	
-	/**
-	 * Type position X (horizontal)
-	 */
-	public static float X ;
+	public Position()
+	{
+		this.X = 0 ;
+		this.Y = 0;
+	}
 	
-	/**
-	 * type position Y (vertical)
-	 */
-	public static float Y ;
-	
+	public Position(float x, float y)
+	{
+		this.X = x ;
+		this.Y = y ;
+	}
+
 	
 }

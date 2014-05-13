@@ -42,19 +42,12 @@ public class Jeux extends BasicGame
 	private float caseAAtteindreYNord = 224 ;
 	private float caseAAtteindreYSud = 224 ; 
 
-	//lors du premier deplacement sur la carte, les coordonnée du deplacement ne se modifient pas de la meme maniere
-	//on est oblige de separer le premier deplacement des autres
-	private boolean aDejaBougeX = false;
-	private boolean aDejaBougeY = false;
 
 	//provient du blog, permet l'animation du sprite
 	private Animation[] animations = new Animation[8];
 	private int numeroDirection = 0 ;
 
 
-
-	private boolean estMouvant ;
-	private boolean zombiesMouvants ;
 	
 	/**
 	 * map actuelle
@@ -66,7 +59,7 @@ public class Jeux extends BasicGame
 	public Jeux()
 	{
 		super("Jeux");
-		// TODO Auto-generated constructor stub
+		
 	}
 
 
@@ -84,11 +77,11 @@ public class Jeux extends BasicGame
 
 		//on baisse l'animation par rapport au coordonnée reelle du personnage pour pouvoir ajuster sa vraie position (en dessous des pieds et non pas en haut a gauche du sprite)
 
-		g.drawAnimation(this.joueur.getAnimationSprite()[(this.numeroDirection + (this.estMouvant ? 4 : 0))], 
+		g.drawAnimation(this.joueur.getAnimationSprite()[(this.numeroDirection + (this.joueur.estEnMouvement ? 4 : 0))], 
 				this.joueur.x-16, this.joueur.y-32);
 
 
-		g.drawAnimation(this.zombie.getAnimationSprite()[(this.numeroDirection + (this.estMouvant ? 4 : 0))], 
+		g.drawAnimation(this.zombie.getAnimationSprite()[(this.numeroDirection + (this.joueur.estEnMouvement ? 4 : 0))], 
 				this.zombie.x-16,this.zombie.y-32);
 
 
@@ -104,10 +97,10 @@ public class Jeux extends BasicGame
 			g.drawString("X : "+this.joueur.x+" Y : "+this.joueur.y , 20, 40);
 			g.drawString("X : "+this.zombie.x+" Y : "+this.zombie.x,200,40);
 
-			g.drawString("caseAAteindreYNord : "+this.caseAAtteindreYNord, 20, 60);
-			g.drawString("caseAAteindreYSud : "+this.caseAAtteindreYSud, 20, 80);
-			g.drawString("caseAAteindreXEst : "+this.caseAAtteindreXEst, 20, 100);
-			g.drawString("caseAAteindreXOuest : "+this.caseAAtteindreXOuest, 20, 120);
+			g.drawString("caseAAteindreYNord : "+this.joueur.caseAAtteindreYNord, 20, 60);
+			g.drawString("caseAAteindreYSud : "+this.joueur.caseAAtteindreYSud, 20, 80);
+			g.drawString("caseAAteindreXEst : "+this.joueur.caseAAtteindreXEst, 20, 100);
+			g.drawString("caseAAteindreXOuest : "+this.joueur.caseAAtteindreXOuest, 20, 120);
 			
 
 		}
@@ -118,7 +111,6 @@ public class Jeux extends BasicGame
 	@Override
 	public void init(GameContainer container) throws SlickException
 	{
-		// TODO Auto-generated method stub
 
 		this.map  = new TiledMap("graphismes/maps/MapCentrale.tmx");
 
@@ -141,99 +133,13 @@ public class Jeux extends BasicGame
 		float futurePositionX = this.joueur.x ;
 		float futurePositionY = this.joueur.y ;
 
-
-
+		
 		//calcul des coordonnée pour le deplacement case par case
-
-		switch(this.joueur.getOrientationPersonnage())
-		{
-		case NORD: {
-			if((int)futurePositionY == (int)this.caseAAtteindreYNord)
-			{
-				if(this.aDejaBougeY)
-				{
-					this.estMouvant = false ;
-					this.caseAAtteindreYNord -= 32;
-					this.caseAAtteindreYSud -= 32 ;
-					//comme la position est de type float, la valeur n'est pas ronde, cela crée des problemes pour pouvoir se deplacer correctement.
-					//on remet la position du personnage a jour pour eviter tout probleme
-					this.joueur.setPositionPersonnageY(this.caseAAtteindreYSud);
-
-
-				}
-				else
-				{
-					this.estMouvant = false ;
-					this.caseAAtteindreYNord -= 32;
-					//les coordonnée de la case a atteindre sud ne change pas du coup
-					this.aDejaBougeY = true;
-				}
-			}	
-		}break;
-
-		case OUEST: {
-			if((int)futurePositionX == (int)this.caseAAtteindreXOuest)
-			{
-				if(this.aDejaBougeX)
-				{
-					this.estMouvant = false ;
-					this.caseAAtteindreXEst -= 32;
-					this.caseAAtteindreXOuest -= 32;
-					this.joueur.setPositionPersonnageX(this.caseAAtteindreXEst);
-				}
-				else
-				{
-					this.estMouvant = false ;
-					this.caseAAtteindreXOuest -= 32;
-					this.aDejaBougeX = true ;
-				}
-			}
-		}break;
-
-		case SUD: {
-			if((int)futurePositionY == (int)this.caseAAtteindreYSud)
-			{
-				if(this.aDejaBougeY)
-				{
-					this.estMouvant = false ;
-					this.caseAAtteindreYNord += 32;
-					this.caseAAtteindreYSud += 32 ;
-					this.joueur.setPositionPersonnageY(this.caseAAtteindreYNord);
-
-				}
-				else
-				{
-					this.estMouvant = false ;
-					this.caseAAtteindreYSud += 32;
-					this.aDejaBougeY = true;;
-				}
-			}	
-		}break;
-
-		case EST: {
-			if((int)futurePositionX == (int)this.caseAAtteindreXEst)
-			{
-				if(this.aDejaBougeX)
-				{
-					this.estMouvant = false ;
-					this.caseAAtteindreXEst += 32;
-					this.caseAAtteindreXOuest += 32;
-					this.joueur.setPositionPersonnageX(this.caseAAtteindreXOuest);
-				}
-				else
-				{
-					this.estMouvant = false ;
-					this.caseAAtteindreXEst += 32;
-					this.aDejaBougeX = true ;
-				}
-
-			}
-		}break;
-		}
-
-
-		//Mouvement fluide
-		if (this.estMouvant) {
+		this.joueur.deplacementDUneCase(futurePositionX, futurePositionY);
+		
+		//Mouvement fluide, besoin de laisser ca la car intevention de la variable delta
+	
+		if (this.joueur.estEnMouvement) {
 
 			switch (this.joueur.getOrientationPersonnage()) {
 
@@ -251,12 +157,10 @@ public class Jeux extends BasicGame
 			{
 				this.joueur.setPositionPersonnageX(futurePositionX);
 				this.joueur.setPositionPersonnageY(futurePositionY);
-
-
 			}
 			else
 			{
-				this.estMouvant = false ;
+				this.joueur.estEnMouvement = false ;
 			}
 
 	
@@ -264,7 +168,6 @@ public class Jeux extends BasicGame
 
 
 	}
-
 
 
 
@@ -303,10 +206,10 @@ public class Jeux extends BasicGame
 	{
 
 		switch(key){
-		case Input.KEY_UP:    this.joueur.setOrientationPersonnage(Orientation.NORD);this.estMouvant = true ;  this.numeroDirection = 0;break;
-		case Input.KEY_LEFT:  this.joueur.setOrientationPersonnage(Orientation.OUEST);this.estMouvant = true ; this.numeroDirection = 1;  break;
-		case Input.KEY_DOWN:  this.joueur.setOrientationPersonnage(Orientation.SUD);this.estMouvant = true ; this.numeroDirection = 2;  break;
-		case Input.KEY_RIGHT: this.joueur.setOrientationPersonnage(Orientation.EST);this.estMouvant = true ; this.numeroDirection = 3; break;
+		case Input.KEY_UP:    this.joueur.setOrientationPersonnage(Orientation.NORD); this.joueur.estEnMouvement = true ;  this.numeroDirection = 0;break;
+		case Input.KEY_LEFT:  this.joueur.setOrientationPersonnage(Orientation.OUEST); this.joueur.estEnMouvement = true ; this.numeroDirection = 1;  break;
+		case Input.KEY_DOWN:  this.joueur.setOrientationPersonnage(Orientation.SUD); this.joueur.estEnMouvement = true ; this.numeroDirection = 2;  break;
+		case Input.KEY_RIGHT: this.joueur.setOrientationPersonnage(Orientation.EST); this.joueur.estEnMouvement = true ; this.numeroDirection = 3; break;
 
 		case Input.KEY_F2 : { if(this.debogueurActive)
 		{

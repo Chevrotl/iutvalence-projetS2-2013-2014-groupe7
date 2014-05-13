@@ -23,7 +23,7 @@ public class Joueur extends Personnage
 	 */
 	private SpriteSheet spriteJoueur;
 
-
+	
 	/**
 	 * constructeur
 	 * @param x position x du joueur
@@ -34,6 +34,9 @@ public class Joueur extends Personnage
 	public Joueur(float x, float y, Orientation orientation, String nomDuJoueur)
 	{
 		super(x,y, orientation);
+		
+		
+		
 		this.nomDuJoueur = nomDuJoueur ;
 		
 		// On test directement dans le constructeur la validite du sprite
