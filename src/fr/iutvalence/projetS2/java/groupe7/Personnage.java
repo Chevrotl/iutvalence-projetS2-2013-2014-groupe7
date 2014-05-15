@@ -283,7 +283,7 @@ public class Personnage
 		switch(this.getOrientationPersonnage())
 		{
 		case NORD: {
-			if((int)futurePositionY == (int)this.caseAAtteindreYNord)
+			if((int)futurePositionY < (int)this.caseAAtteindreYNord)
 			{
 				if(this.aDejaBougeY)
 				{
@@ -307,7 +307,7 @@ public class Personnage
 		}break;
 
 		case OUEST: {
-			if((int)futurePositionX == (int)this.caseAAtteindreXOuest)
+			if((int)futurePositionX < (int)this.caseAAtteindreXOuest)
 			{
 				if(this.aDejaBougeX)
 				{
@@ -326,7 +326,7 @@ public class Personnage
 		}break;
 
 		case SUD: {
-			if((int)futurePositionY == (int)this.caseAAtteindreYSud)
+			if((int)futurePositionY > (int)this.caseAAtteindreYSud)
 			{
 				if(this.aDejaBougeY)
 				{
@@ -346,7 +346,7 @@ public class Personnage
 		}break;
 
 		case EST: {
-			if((int)futurePositionX == (int)this.caseAAtteindreXEst)
+			if((int)futurePositionX > (int)this.caseAAtteindreXEst)
 			{
 				if(this.aDejaBougeX)
 				{
