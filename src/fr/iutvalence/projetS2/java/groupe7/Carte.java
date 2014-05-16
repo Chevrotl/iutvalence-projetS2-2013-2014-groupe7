@@ -8,8 +8,7 @@ package fr.iutvalence.projetS2.java.groupe7;
 
 
 public enum Carte
-{
-	
+{	
 	CARTE_PRINCIPALE {
 		int testCarte ;
 	};
