@@ -1,40 +1,26 @@
 package fr.iutvalence.projetS2.java.groupe7;
 
 /**
- * @author chevrotl
- * Donne la taille de la carte
+ * @author Lucas
+ * 
  */
-public class Carte
+
+
+
+public enum Carte
 {
+	CARTE_PRINCIPALE {
+		int testCarte ;
+	};
 	
-	/**
-	 * Taille horizontale de la carte
-	 */
-	private final static int tailleX = 0; //Valeur a changer 
-	
-	/**
-	 * Taille verticale de la carte
-	 */
-	private final static int tailleY = 0; //Valeur a changer
-
-	/**
-	 * Accesseur en lecture de tailleX
-	 * @return tailleX
-	 */
-	public static int obtenirTailleX()
-	{
-		return tailleX;
-	}
-
-	/**
-	 * Accesseur en lecture de tailleY
-	 * @return tailleY
-	 */
-	public static int obtenirTailleY()
-	{
-		return tailleY;
-	}
-	
+	public int coordonnée_mur_nord_x ;
+	public int coordonnée_mur_nord_y ;
+	public int coordonnée_mur_sud_x ;
+	public int coordonnée_mur_sud_y ;
+	public int coordonnée_mur_ouest_y ;
+	public int coordonnée_mur_ouest_x ;
+	public int coordonnée_mur_est_y ;
+	public int coordonnée_mur_est_x ;
 	
 	
 }

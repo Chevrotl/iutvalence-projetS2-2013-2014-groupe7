@@ -27,7 +27,8 @@ public class Jeux extends BasicGame
 	private static final int LARGEUR_MAP = 576; //17 cases 550
 	private static final int NOMBRES_CASES_LARGEUR = LARGEUR_MAP / 32 ;
 	private static final int NOMBRES_CASES_HAUTEUR = HAUTEUR_MAP / 32 ;
-
+	private static final int POSITION_SPAWN_JOUEUR_X = 768;
+	private static final int POSITION_SPAWN_JOUEUR_Y = 768;
 	/**
 	 * Joueur actuel, crée dans l'init 
 	 */
@@ -45,8 +46,11 @@ public class Jeux extends BasicGame
 	 * map actuelle
 	 */
 	TiledMap map ;
-
+	
 	private boolean debogueurActive;
+	
+	private boolean premierTranslate = false ;
+	
 
 	public Jeux()
 	{
@@ -59,10 +63,21 @@ public class Jeux extends BasicGame
 	public void render(GameContainer container, Graphics g) throws SlickException
 	{
 		// generation de la map 
-		this.map.render(-576, -416, 0);
-		this.map.render(-576, -416, 1);
-		this.map.render(-576, -416, 2);
+		if(!(this.premierTranslate))
+		{
+			g.translate(-LARGEUR_MAP, -HAUTEUR_MAP);
+		}
+		this.map.render(0, 0, 0);
+		this.map.render(0, 0, 1);
+		this.map.render(0, 0, 2);
 		
+		
+		
+		if(this.joueur.x <= 0)
+		{
+			g.translate(LARGEUR_MAP, 0);
+			
+		}
 		
 
 
@@ -77,8 +92,8 @@ public class Jeux extends BasicGame
 				this.joueur.x-16, this.joueur.y-32);
 
 
-		g.drawAnimation(this.zombie.getAnimationSprite()[(this.numeroDirection + (this.joueur.estEnMouvement ? 4 : 0))], 
-				this.zombie.x-16,this.zombie.y-32);
+	//	g.drawAnimation(this.zombie.getAnimationSprite()[(this.numeroDirection + (this.joueur.estEnMouvement ? 4 : 0))], 
+		//		this.zombie.x-16,this.zombie.y-32);
 
 
 
@@ -90,20 +105,24 @@ public class Jeux extends BasicGame
 			Color colorPoliceDebug = new Color((float)0.8, 0, 0);
 			g.setColor(colorPoliceDebug);
 
-			g.drawString("X : "+this.joueur.x+" Y : "+this.joueur.y , 20, 40);
-			g.drawString("X : "+this.zombie.x+" Y : "+this.zombie.x,200,40);
+			g.drawString("X : "+this.joueur.x+" Y : "+this.joueur.y , 590, 450);
+			//g.drawString("X : "+this.zombie.x+" Y : "+this.zombie.x,200,40);
 
-			g.drawString("caseAAteindreYNord : "+this.joueur.caseAAtteindreYNord, 20, 60);
-			g.drawString("caseAAteindreYSud : "+this.joueur.caseAAtteindreYSud, 20, 80);
-			g.drawString("caseAAteindreXEst : "+this.joueur.caseAAtteindreXEst, 20, 100);
-			g.drawString("caseAAteindreXOuest : "+this.joueur.caseAAtteindreXOuest, 20, 120);
-			g.drawString("estUneCaseInterdite : "+this.estUneCaseInterdite(this.joueur.x, this.joueur.y), 20, 140);
+			g.drawString("caseAAteindreYNord : "+this.joueur.caseAAtteindreYNord, 590, 470);
+			g.drawString("caseAAteindreYSud : "+this.joueur.caseAAtteindreYSud, 590, 490);
+			g.drawString("caseAAteindreXEst : "+this.joueur.caseAAtteindreXEst, 590, 510);
+			g.drawString("caseAAteindreXOuest : "+this.joueur.caseAAtteindreXOuest, 590, 530);
+			g.drawString("estUneCaseInterdite : "+this.estUneCaseInterdite(this.joueur.x, this.joueur.y), 590, 550);
+			g.drawString("premierTranslate : "+this.premierTranslate, 590, 570);
 			
 
 		}
 		
-		this.map.render(-576, -416, 3);
+		this.map.render(0, 0, 3);
 
+
+			
+	
 	}
 
 
@@ -113,9 +132,9 @@ public class Jeux extends BasicGame
 
 		this.map  = new TiledMap("graphismes/maps/new map/MapCentrale.tmx");
 
-		this.zombie = new Zombie(100, 100, Orientation.EST);
+	//	this.zombie = new Zombie(100, 100, Orientation.EST);
 
-		this.joueur = new Joueur(224,224, Orientation.SUD, "Link") ; 
+		this.joueur = new Joueur(768,768, Orientation.SUD, "Link") ; 
 
 
 
@@ -137,6 +156,7 @@ public class Jeux extends BasicGame
 		this.joueur.deplacementDUneCase(futurePositionX, futurePositionY);
 		
 		//Mouvement fluide, besoin de laisser ca la car intevention de la variable delta
+		
 	
 		if (this.joueur.estEnMouvement) {
 
@@ -229,6 +249,7 @@ public class Jeux extends BasicGame
 		try
 		{
 			AppGameContainer app = new AppGameContainer(new Jeux()) ; 
+			//app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP,false);
 			app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP,false);
 			app.setShowFPS(true);
 			app.start();
