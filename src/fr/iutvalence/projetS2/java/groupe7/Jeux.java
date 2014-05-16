@@ -23,8 +23,8 @@ public class Jeux extends BasicGame
 {
 
 
-	private static final int HAUTEUR_MAP = 416 ; //13 cases
-	private static final int LARGEUR_MAP = 544; //17 cases
+	private static final int HAUTEUR_MAP = 416 ; //13 cases 450
+	private static final int LARGEUR_MAP = 576; //17 cases 550
 	private static final int NOMBRES_CASES_LARGEUR = LARGEUR_MAP / 32 ;
 	private static final int NOMBRES_CASES_HAUTEUR = HAUTEUR_MAP / 32 ;
 
@@ -34,14 +34,6 @@ public class Jeux extends BasicGame
 	private Joueur joueur ;
 
 	private Zombie zombie ;
-
-
-	//utile pour le deplacement case par case, = aux coordonnée de pop du joueur
-	private float caseAAtteindreXEst = 224 ;
-	private float caseAAtteindreXOuest = 224 ;
-	private float caseAAtteindreYNord = 224 ;
-	private float caseAAtteindreYSud = 224 ; 
-
 
 	//provient du blog, permet l'animation du sprite
 	private Animation[] animations = new Animation[8];
@@ -67,7 +59,11 @@ public class Jeux extends BasicGame
 	public void render(GameContainer container, Graphics g) throws SlickException
 	{
 		// generation de la map 
-		this.map.render(0, 0, 0);
+		this.map.render(-576, -416, 0);
+		this.map.render(-576, -416, 1);
+		this.map.render(-576, -416, 2);
+		
+		
 
 
 		// creation d'une ombre sous les pieds du personnage
@@ -101,9 +97,12 @@ public class Jeux extends BasicGame
 			g.drawString("caseAAteindreYSud : "+this.joueur.caseAAtteindreYSud, 20, 80);
 			g.drawString("caseAAteindreXEst : "+this.joueur.caseAAtteindreXEst, 20, 100);
 			g.drawString("caseAAteindreXOuest : "+this.joueur.caseAAtteindreXOuest, 20, 120);
+			g.drawString("estUneCaseInterdite : "+this.estUneCaseInterdite(this.joueur.x, this.joueur.y), 20, 140);
 			
 
 		}
+		
+		this.map.render(-576, -416, 3);
 
 	}
 
@@ -112,7 +111,7 @@ public class Jeux extends BasicGame
 	public void init(GameContainer container) throws SlickException
 	{
 
-		this.map  = new TiledMap("graphismes/maps/MapCentrale.tmx");
+		this.map  = new TiledMap("graphismes/maps/new map/MapCentrale.tmx");
 
 		this.zombie = new Zombie(100, 100, Orientation.EST);
 
@@ -179,7 +178,7 @@ public class Jeux extends BasicGame
 	 */
 	public boolean estUneCaseInterdite(float floatPositionX, float floatPositionY)
 	{
-		boolean deplacementInterdit ;
+		
 		//Changement de type de float en int car la methode getTileImage a comme parametre des int.
 		//La case interdite se fait suivant la position absolue de la case, et non pas sa position en pixel : on convertit
 		int positionX = ((int)floatPositionX) / this.map.getTileWidth() ;
@@ -189,7 +188,7 @@ public class Jeux extends BasicGame
 		Image caseInterdite = this.map.getTileImage(positionX, positionY, this.map.getLayerIndex("bloc"));
 
 		//On verifie si il existe une case bloque,  si oui le personnage ne bouge pas, sinon il peut se deplacer
-		return deplacementInterdit = (caseInterdite != null);
+		return (caseInterdite != null);
 
 
 	}

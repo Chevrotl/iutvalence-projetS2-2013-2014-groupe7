@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="desert.tsx"/>
+ <tileset firstgid="49" name="dehors" tilewidth="32" tileheight="32">
+  <image source="../textures/dehors.png" trans="000000" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="241" name="Dungeon_A4" tilewidth="32" tileheight="32">
+  <image source="../textures/Dungeon_A4.png" trans="000000" width="512" height="480"/>
+ </tileset>
+ <tileset firstgid="481" name="Dungeon_A5" tilewidth="32" tileheight="32">
+  <image source="../textures/Dungeon_A5.png" trans="000000" width="256" height="512"/>
+ </tileset>
+ <tileset firstgid="609" name="montagne" tilewidth="32" tileheight="32">
+  <image source="../textures/montagne.png" trans="000000" width="384" height="288"/>
+ </tileset>
+ <layer name="Ground" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6DxyusP63EU7CVVVVVVVVV9dHsE218=
+  </data>
+ </layer>
+ <layer name="effet" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt2L0OAUEUhuGJ69USnaBEvRXip0H8VMRGiXBX3mIKOVlZyWQyE/ne5GlOs1+745xS4bUbznWNKWYV9xT1+e7Q2GBbcU+1b4TiwwlncysS7hsk+vYvaV9Y2hdW7vuUUkoppZRSSv1v9t2tzhwLLLHyt1bEf1r77lZnhz0OOPpbL+I+++5W54ISE1z9bZzJm8CNHXc8sMYTLzQz2fetTuR9bxEkPZg=
+  </data>
+ </layer>
+ <layer name="raccord" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztzkENAAAIBKCb/f/WNYbOQQIS4IKu7QEAAAAAwB8D7AYAmg==
+  </data>
+ </layer>
+</map>

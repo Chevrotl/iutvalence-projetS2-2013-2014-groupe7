@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="54" height="39" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Dungeon_A4" tilewidth="32" tileheight="32">
+  <image source="../textures/Dungeon_A4.png" width="512" height="480"/>
+ </tileset>
+ <tileset firstgid="241" name="Dungeon_A5" tilewidth="32" tileheight="32">
+  <image source="../textures/Dungeon_A5.png" width="256" height="512"/>
+ </tileset>
+ <tileset firstgid="369" name="TuilesBLoc" tilewidth="32" tileheight="32">
+  <image source="../textures/TuilesBLoc.png" width="160" height="160"/>
+ </tileset>
+ <tileset firstgid="394" name="vrac_1" tilewidth="32" tileheight="32">
+  <image source="../textures/vrac_1.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="650" name="dehors" tilewidth="32" tileheight="32">
+  <image source="../textures/dehors.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="842" name="entree" tilewidth="32" tileheight="32">
+  <image source="../textures/entree.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="1098" name="statues" tilewidth="32" tileheight="32">
+  <image source="../textures/statues.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="1354" name="decor" tilewidth="32" tileheight="32">
+  <image source="../textures/decor.png" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="1546" name="vrac 2" tilewidth="32" tileheight="32">
+  <image source="../textures/vrac 2.png" width="512" height="512"/>
+ </tileset>
+ <layer name="sol" width="54" height="39">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WwQ3CMAwA20cXYRPEn37Ygw3Kjyf84Ac/OkJhgrIBbABjkEq1sFCxHRJFTqilk6iaur6kCc4yP1F7Qlt0Nd0c0er1cESr1yR3Y/QKF//ktS5oYvbaGfbIBV/H7HUy1MgLX8fsleJ3OOSYwrmRihcFeIXqD6l3tIaroGYJUi8OaU1NRveid+b+rc/B9b1T853Ncr7vlfTPXE1ND9WLPpn7D+RFjQEvru/l8khqAq9v+3hRvKH2O3hRYyR5aos8VC5fXrD+rl42eUJ4wfq7etnkCeElwXceX14aGb1+o8vRethfrcd6Rq+4vNpAQL9xDvS+UAFeqUWqXpee1CJWr7KgAS9unLboatoYtgKveWReB8Oxr69i1gvmoPpAWwy5DHnBWuE5KNFcaIsSzXn3e2mxv/Bz2gLXaHtu4Ge0hfQ7jPE8BK9VYl6a/r9el4vDteggAAA=
+  </data>
+ </layer>
+ <layer name="dessin sur sol et mur" width="54" height="39">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3PPQ6CQBRF4ZfJjK2YgC2agC2wAnTLygrQhXk7Kzt+Ji/nS245mXfM1ndMZoV2Sht8tqFaPRft6qyrU0+vDc66RvXctYezLgAAgH+e0eylTXHvS36WuGnW27f2yagrx5sAL2IwS9oh7H3Jskr1VNrZWVejnla7OesCAAAAAOTlC8YIbZDoIAAA
+  </data>
+ </layer>
+ <layer name="obstacle sol " width="54" height="39">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WPQ6CMBQH8JqUeie/Br2T8QISd5TRBdzUTRyNk2dw1cndA1jD4GvS0qECrf5/SfP46GtfUwgwBv9qxtvJrdvCoTaX3DadO21XAPBbeLeMN/G5dhfqPQAAqN/U4d+M5i4N4zyF/piiuVeHemhuXDHOxfJfR3Nzwzj0W2X6btHch2Vdp4qabLkAEI5exFhftkHU/NxDOeeohXkBAHRyUbbQzGXNsdDHhKwnqegXe7julawpFfqYkXqzin6ph+syGctaJ8J8DtCUgjx3x0CfwR1Xo82Wq9FXa67Gtw3Zo0LY+/toz9X47f4+oXt0CPT98sUL1wkLruggAAA=
+  </data>
+ </layer>
+ <layer name="element en lair" width="54" height="39">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglFAL3CIjYGhjRXCPsw2sG6hBvgC9cMlJH9dZkOVG+oA5q/hBoarv4YyqGAZGL2jYBSMglEwCgYecAHrZW4g5hmA+pkXaCcfjeyVAporDcQyA+AvWaCdcjSyVwtorjYQ6wyAv3SBduqNtuNGwQCBMgranMh6p1BgDrLemxSYQ4nekQSKgf36IjYIXUIGG0YPNlAKdFMZG3a6GYhbgLgJysalrmwQ+osQWMQGwcMFGAH9YgzES6D+gvFHwSigN1g2DNLdXBZUmhCYw4JKD1UwHOJuuIPROBoFhAAA72qBaeggAAA=
+  </data>
+ </layer>
+ <layer name="bloc" width="54" height="39" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WUQrAIAxD3ZF3/x+/hCHqlEab1j4Yk1HSRqc2peBG3gfzsDGqa6ZuZl8MGmjC114NNDf5Kt++Z0L9/tPQ5qb10tBA49nXTB9hrd8YUfvygoYvVL+K+g935ZXOSy+mNV7VWa1HSujY0mEjfOFyncjXO4OlOtp43afefXnsN07NX2tsnfDFB2p/WQF1RwaBFMvnRqHUPVv/arwWrTpH62XZFzKeCQ/7i4UMIIWrV+ggAAA=
+  </data>
+ </layer>
+ <objectgroup name="Calque d'objets 1" width="54" height="39" visible="0">
+  <object name="go vallee" type="change-map" x="290" y="514" width="26" height="31">
+   <properties>
+    <property name="dest-map" value="vallee"/>
+    <property name="dest-x" value="100"/>
+    <property name="dest-y" value="100"/>
+   </properties>
+  </object>
+  <object name="go desert" type="change-map" x="832" y="132" width="27" height="30">
+   <properties>
+    <property name="dest-map" value="desert"/>
+    <property name="dest-x" value="100"/>
+    <property name="dest-y" value="100"/>
+   </properties>
+  </object>
+  <object name="go volcan" type="change-map" x="1380" y="516" width="24" height="25">
+   <properties>
+    <property name="dest-map" value="volcan"/>
+    <property name="dest-x" value="100"/>
+    <property name="dest-y" value="100"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
