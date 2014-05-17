@@ -9,18 +9,17 @@ package fr.iutvalence.projetS2.java.groupe7;
 
 public enum Carte
 {	
+	
+
 	CARTE_PRINCIPALE {
-		int testCarte ;
+		
+		//TODO Gerer les trasnlate avec des multiples des coordonnÃ©es
+		
+		int coordonneeMurNord = 832 ;
+		int coordonneeMurSud = 832 - Jeux.HAUTEUR_MAP ;
+		int coordonneeMurOuest = 576 ;
+		int coordonneeMurEst = 576 + Jeux.LARGEUR_MAP ; 
 	};
-	
-	public int coordonnée_mur_nord_x ;
-	public int coordonnée_mur_nord_y ;
-	public int coordonnée_mur_sud_x ;
-	public int coordonnée_mur_sud_y ;
-	public int coordonnée_mur_ouest_y ;
-	public int coordonnée_mur_ouest_x ;
-	public int coordonnée_mur_est_y ;
-	public int coordonnée_mur_est_x ;
-	
+
 	
 }

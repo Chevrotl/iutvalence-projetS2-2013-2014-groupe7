@@ -277,7 +277,7 @@ public class Personnage
 		
 	}
 
-	
+	//TODO faire marcher la methode
 	public void  deplacementDUneCase(float futurePositionX, float futurePositionY)
 	{
 		switch(this.getOrientationPersonnage())

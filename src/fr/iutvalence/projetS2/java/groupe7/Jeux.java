@@ -23,12 +23,12 @@ public class Jeux extends BasicGame
 {
 
 
-	private static final int HAUTEUR_MAP = 416 ; //13 cases 450
-	private static final int LARGEUR_MAP = 576; //17 cases 550
-	private static final int NOMBRES_CASES_LARGEUR = LARGEUR_MAP / 32 ;
-	private static final int NOMBRES_CASES_HAUTEUR = HAUTEUR_MAP / 32 ;
-	private static final int POSITION_SPAWN_JOUEUR_X = 768;
-	private static final int POSITION_SPAWN_JOUEUR_Y = 768;
+	public static final int HAUTEUR_MAP = 416 ; //13 cases 450
+	public static final int LARGEUR_MAP = 576; //17 cases 550
+	public static final int NOMBRES_CASES_LARGEUR = LARGEUR_MAP / 32 ;
+	public static final int NOMBRES_CASES_HAUTEUR = HAUTEUR_MAP / 32 ;
+	private static final int POSITION_SPAWN_JOUEUR_X = 864;
+	private static final int POSITION_SPAWN_JOUEUR_Y = 1120;
 	/**
 	 * Joueur actuel, crée dans l'init 
 	 */
@@ -63,23 +63,16 @@ public class Jeux extends BasicGame
 	public void render(GameContainer container, Graphics g) throws SlickException
 	{
 		// generation de la map 
-		if(!(this.premierTranslate))
-		{
-			g.translate(-LARGEUR_MAP, -HAUTEUR_MAP);
-		}
+		//decalage de l'affichage de la map pour venir sur la carte ou spawn le joueur
+			g.translate(-LARGEUR_MAP, -2*HAUTEUR_MAP);
+			
 		this.map.render(0, 0, 0);
 		this.map.render(0, 0, 1);
 		this.map.render(0, 0, 2);
 		
 		
 		
-		if(this.joueur.x <= 0)
-		{
-			g.translate(LARGEUR_MAP, 0);
-			
-		}
-		
-
+	
 
 		// creation d'une ombre sous les pieds du personnage
 		g.setColor(new Color(0, 0, 0, .5f));
@@ -134,7 +127,7 @@ public class Jeux extends BasicGame
 
 	//	this.zombie = new Zombie(100, 100, Orientation.EST);
 
-		this.joueur = new Joueur(768,768, Orientation.SUD, "Link") ; 
+		this.joueur = new Joueur(POSITION_SPAWN_JOUEUR_X, POSITION_SPAWN_JOUEUR_Y, Orientation.NORD, "Link") ; 
 
 
 
@@ -249,7 +242,6 @@ public class Jeux extends BasicGame
 		try
 		{
 			AppGameContainer app = new AppGameContainer(new Jeux()) ; 
-			//app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP,false);
 			app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP,false);
 			app.setShowFPS(true);
 			app.start();
