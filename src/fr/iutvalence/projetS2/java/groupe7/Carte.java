@@ -10,16 +10,29 @@ package fr.iutvalence.projetS2.java.groupe7;
 public enum Carte
 {	
 	
+	CARTE_PRINCIPALE("graphismes/maps/new map/MapCentrale.tmx",832,1152,1248,576);
 
-	CARTE_PRINCIPALE {
-		
-		//TODO Gerer les trasnlate avec des multiples des coordonnées
-		
-		int coordonneeMurNord = 832 ;
-		int coordonneeMurSud = 832 - Jeux.HAUTEUR_MAP ;
-		int coordonneeMurOuest = 576 ;
-		int coordonneeMurEst = 576 + Jeux.LARGEUR_MAP ; 
-	};
 
+	private String cheminFichierMap ;
+	public int coordonneeMurNord ;
+	public int coordoneeMurEst ;
+	public int coordoneeMurSud ;
+	public int coordonneeMurOuest ;
+
+	Carte(String cheminFichierMap, int coordonneeMurNord, int coordoneeMurEst, int coordoneeMurSud, int coordonneeMurOuest) 
+	{
+		this.cheminFichierMap = cheminFichierMap ;
+		this.coordonneeMurNord = coordonneeMurNord ;
+		this.coordoneeMurEst = coordoneeMurEst ;
+		this.coordoneeMurSud = coordoneeMurSud ;
+		this.coordonneeMurOuest = coordonneeMurOuest ;
+	}
+
+	public String getCheminFichierMap()
+	{
+		return cheminFichierMap;
+	}
 	
+
 }
+
