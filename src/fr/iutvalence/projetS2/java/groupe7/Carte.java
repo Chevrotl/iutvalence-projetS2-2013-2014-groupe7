@@ -26,6 +26,7 @@ public enum Carte
 		this.coordoneeMurEst = coordoneeMurEst ;
 		this.coordoneeMurSud = coordoneeMurSud ;
 		this.coordonneeMurOuest = coordonneeMurOuest ;
+		
 	}
 
 	public String getCheminFichierMap()
