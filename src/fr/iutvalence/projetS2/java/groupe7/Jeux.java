@@ -28,9 +28,7 @@ public class Jeux extends BasicGame
 	public static final int NOMBRES_CASES_HAUTEUR = HAUTEUR_MAP / 32;
 	private static final int POSITION_SPAWN_JOUEUR_X = 864;
 	private static final int POSITION_SPAWN_JOUEUR_Y = 1120;
-	/**
-	 * Joueur actuel, crée dans l'init
-	 */
+
 	private Joueur joueur;
 
 	private Zombie zombie;
@@ -67,11 +65,6 @@ public class Jeux extends BasicGame
 		g.translate(-LARGEUR_MAP, -2 * HAUTEUR_MAP);
 		
 		g.translate(this.nombreTranslateHorizontal*LARGEUR_MAP, this.nombreTranslateVertical*HAUTEUR_MAP);
-
-
-
-//		if (this.premierTranslate == false)
-//		{
 			
 			if (this.joueur.x >= this.coordoneeMurEst)
 			{
@@ -101,8 +94,7 @@ public class Jeux extends BasicGame
 				this.nombreTranslateVertical--;
 				this.premierTranslate = true ;
 			}			
-				
-//		}
+
 
 		this.map.render(0, 0, 0);
 		this.map.render(0, 0, 1);
@@ -112,20 +104,18 @@ public class Jeux extends BasicGame
 		g.setColor(new Color(0, 0, 0, .5f));
 		g.fillOval(this.joueur.x - 10, this.joueur.y - 4, 20, 10);
 
-		// on baisse l'animation par rapport au coordonnée reelle du personnage
-		// pour pouvoir ajuster sa vraie position (en dessous des pieds et non
-		// pas en haut a gauche du sprite)
-
 		g.drawAnimation(
 				this.joueur.getAnimationSprite()[(this.numeroDirection + (this.joueur.estEnMouvement ? 4 : 0))],
-				this.joueur.x - 16, this.joueur.y - 32);
+				this.joueur.x - 16, this.joueur.y - 32); // on baisse la position pour avoir la position sous les pieds
 
 		// g.drawAnimation(this.zombie.getAnimationSprite()[(this.numeroDirection
 		// + (this.joueur.estEnMouvement ? 4 : 0))],
 		// this.zombie.x-16,this.zombie.y-32);
 
-		// debugueur, permet d'afficher des variables
+		
 		this.map.render(0, 0, 3);
+
+		// debugueur, permet d'afficher des variables
 
 		if (this.debogueurActive)
 		{
@@ -139,9 +129,6 @@ public class Jeux extends BasicGame
 			g.drawString("coordonneeMurSud : "+this.coordoneeMurSud,this.coordonneeMurOuest+20, this.coordonneeMurNord+120);
 			g.drawString("coordonneeMurOuest : "+this.coordonneeMurOuest,this.coordonneeMurOuest+20, this.coordonneeMurNord+140);
 			g.drawString("premierTranslate : "+this.premierTranslate, this.coordonneeMurOuest+20, this.coordonneeMurNord+160);
-//			g.drawString("coordonneMurNord : "+this.coordonneeMurNord, 600, 600);
-//			g.drawString("coordonneMurSud : "+this.coordoneeMurSud, 600, 620);
-
 		}
 		
 	}
@@ -175,13 +162,11 @@ public class Jeux extends BasicGame
 
 		// Mouvement fluide, besoin de laisser ca la car intevention de la
 		// variable delta
-
 		if (this.joueur.estEnMouvement)
 		{
 
 			switch (this.joueur.getOrientationPersonnage())
 			{
-
 			case NORD:
 				futurePositionY = (this.joueur.y -= .1f * delta);
 				break;
@@ -249,7 +234,7 @@ public class Jeux extends BasicGame
 	 */
 	public void keyPressed(int key, char c)
 	{
-
+		
 		switch (key)
 		{
 		case Input.KEY_UP:
@@ -274,18 +259,8 @@ public class Jeux extends BasicGame
 			break;
 
 		case Input.KEY_F2:
-		{
-			if (this.debogueurActive)
-			{
-				this.debogueurActive = false;
-				break;
-			}
-			else
-			{
-				this.debogueurActive = true;
-				break;
-			}
-		}
+			this.debogueurActive = !this.debogueurActive ;
+			break;
 		case Input.KEY_ESCAPE:
 			System.exit(0);
 		}

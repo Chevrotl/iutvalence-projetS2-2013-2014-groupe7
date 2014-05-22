@@ -19,7 +19,6 @@ public class Zombie extends Personnage
 	 */
 	private SpriteSheet spriteZombie;
 
-
 	/**
 	 * constructeur
 	 * @param x position x du zombie
@@ -46,8 +45,6 @@ public class Zombie extends Personnage
 			e.printStackTrace();
 		}
 	}
-
-
 
 	/**
 	 * methode renvoyant l'animation du sprite suivant l'orienation est si il est en mouvement ou non
