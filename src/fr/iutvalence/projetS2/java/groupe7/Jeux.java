@@ -65,33 +65,44 @@ public class Jeux extends BasicGame
 		// decalage de l'affichage de la map pour venir sur la carte ou spawn le
 		// joueur
 		g.translate(-LARGEUR_MAP, -2 * HAUTEUR_MAP);
+		
+		g.translate(this.nombreTranslateHorizontal*LARGEUR_MAP, this.nombreTranslateVertical*HAUTEUR_MAP);
 
-		g.translate(this.nombreTranslateHorizontal * LARGEUR_MAP, this.nombreTranslateVertical * HAUTEUR_MAP);
 
-		Orientation peutTranslate = peutTranslate();
 
-		if (peutTranslate != null)
-		{
-			switch (peutTranslate())
+//		if (this.premierTranslate == false)
+//		{
+			
+			if (this.joueur.x >= this.coordoneeMurEst)
 			{
-			case NORD:
+				this.coordoneeMurEst += LARGEUR_MAP ;
+				this.coordonneeMurOuest += LARGEUR_MAP ;
+				this.nombreTranslateHorizontal-- ;
+				this.premierTranslate = true ;
+			}
+			if (this.joueur.x <= this.coordonneeMurOuest)
+			{
+				this.coordoneeMurEst -= LARGEUR_MAP ;
+				this.coordonneeMurOuest -= LARGEUR_MAP ;
+				this.nombreTranslateHorizontal++;
+				this.premierTranslate = true ;
+			}
+			if (this.joueur.y <= this.coordonneeMurNord)
+			{
+				this.coordonneeMurNord -= HAUTEUR_MAP;
+				this.coordoneeMurSud -= HAUTEUR_MAP;
 				this.nombreTranslateVertical++;
+				this.premierTranslate = true ;
+			}
+			if (this.joueur.y >= this.coordoneeMurSud)
+			{
 				this.coordonneeMurNord += HAUTEUR_MAP ;
 				this.coordoneeMurSud += HAUTEUR_MAP ;
-				break;
-			case EST:
-				this.nombreTranslateHorizontal++;
-				break;
-			case SUD:
 				this.nombreTranslateVertical--;
-				break;
-			case OUEST:
-				this.nombreTranslateHorizontal--;
-				break;
-			default:
-				break;
-			}
-		}
+				this.premierTranslate = true ;
+			}			
+				
+//		}
 
 		this.map.render(0, 0, 0);
 		this.map.render(0, 0, 1);
@@ -114,50 +125,27 @@ public class Jeux extends BasicGame
 		// this.zombie.x-16,this.zombie.y-32);
 
 		// debugueur, permet d'afficher des variables
+		this.map.render(0, 0, 3);
+
 		if (this.debogueurActive)
 		{
 			Color colorPoliceDebug = new Color((float) 0.8, 0, 0);
 			g.setColor(colorPoliceDebug);
 
-			g.drawString("X : " + this.joueur.x + " Y : " + this.joueur.y, 590, 450);
-			// g.drawString("X : "+this.zombie.x+" Y : "+this.zombie.x,200,40);
-
-			g.drawString("caseAAteindreYNord : " + this.joueur.caseAAtteindreYNord, 590, 470);
-			g.drawString("caseAAteindreYSud : " + this.joueur.caseAAtteindreYSud, 590, 490);
-			g.drawString("caseAAteindreXEst : " + this.joueur.caseAAtteindreXEst, 590, 510);
-			g.drawString("caseAAteindreXOuest : " + this.joueur.caseAAtteindreXOuest, 590, 530);
-			g.drawString("estUneCaseInterdite : " + this.estUneCaseInterdite(this.joueur.x, this.joueur.y), 590, 550);
-			g.drawString("premierTranslate : " + this.premierTranslate, 590, 570);
+			g.drawString("X : " + this.joueur.x + " Y : " + this.joueur.y,  this.coordonneeMurOuest+20, this.coordonneeMurNord+20);
+			g.drawString("estUneCaseInterdite : " + this.estUneCaseInterdite(this.joueur.x, this.joueur.y), this.coordonneeMurOuest+20, this.coordonneeMurNord+60);
+			g.drawString("coordonneeMurNord : "+this.coordonneeMurNord,this.coordonneeMurOuest+20, this.coordonneeMurNord+80);
+			g.drawString("coordonneeMurEst : "+this.coordoneeMurEst,this.coordonneeMurOuest+20, this.coordonneeMurNord+100);
+			g.drawString("coordonneeMurSud : "+this.coordoneeMurSud,this.coordonneeMurOuest+20, this.coordonneeMurNord+120);
+			g.drawString("coordonneeMurOuest : "+this.coordonneeMurOuest,this.coordonneeMurOuest+20, this.coordonneeMurNord+140);
+			g.drawString("premierTranslate : "+this.premierTranslate, this.coordonneeMurOuest+20, this.coordonneeMurNord+160);
+//			g.drawString("coordonneMurNord : "+this.coordonneeMurNord, 600, 600);
+//			g.drawString("coordonneMurSud : "+this.coordoneeMurSud, 600, 620);
 
 		}
-
-		this.map.render(0, 0, 3);
-
+		
 	}
 
-	/**
-	 * methode permettant de renvoyer une orientation si le personnage a changer
-	 * de map
-	 * 
-	 * @return Orientation de quel cote est alle le personnage
-	 */
-	private Orientation peutTranslate()
-	{
-		if (this.joueur.x >= this.coordoneeMurEst)
-			return Orientation.EST;
-		if (this.joueur.x <= this.coordonneeMurOuest)
-			return Orientation.OUEST;
-		if (this.joueur.y <= this.coordonneeMurNord)
-		{
-			return Orientation.NORD;
-		}
-			
-		if (this.joueur.y >= this.coordoneeMurSud)
-			return Orientation.SUD;
-
-		return null;
-
-	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException
@@ -174,6 +162,7 @@ public class Jeux extends BasicGame
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException
 	{
+		
 		/**
 		 * Future position du personnage, servira a savoir si il peut se
 		 * deplacer sur une case qui n'est pas bloquée
@@ -307,9 +296,9 @@ public class Jeux extends BasicGame
 		try
 		{
 			AppGameContainer app = new AppGameContainer(new Jeux());
-			//app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP, false);
+			app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP, false);
 			
-			app.setDisplayMode(900, 900, false);app.setShowFPS(true);
+			//app.setDisplayMode(900, 900, false);app.setShowFPS(true);
 			app.start();
 		}
 		catch (SlickException e)
