@@ -19,7 +19,7 @@ import org.newdawn.slick.tiled.TiledMap;
  * @author Lucas
  * 
  */
-public class Jeux extends BasicGame
+public class DeplacementState extends BasicGame
 {
 
 	public static final int HAUTEUR_MAP = 416; // 13 cases 450
@@ -48,9 +48,7 @@ public class Jeux extends BasicGame
 
 	private boolean debogueurActive;
 
-	private boolean premierTranslate = false;
-
-	public Jeux()
+	public DeplacementState()
 	{
 		super("Jeux");
 
@@ -64,37 +62,9 @@ public class Jeux extends BasicGame
 		// joueur
 		g.translate(-LARGEUR_MAP, -2 * HAUTEUR_MAP);
 		
-		g.translate(this.nombreTranslateHorizontal*LARGEUR_MAP, this.nombreTranslateVertical*HAUTEUR_MAP);
-			
-			if (this.joueur.x >= this.coordoneeMurEst)
-			{
-				this.coordoneeMurEst += LARGEUR_MAP ;
-				this.coordonneeMurOuest += LARGEUR_MAP ;
-				this.nombreTranslateHorizontal-- ;
-				this.premierTranslate = true ;
-			}
-			if (this.joueur.x <= this.coordonneeMurOuest)
-			{
-				this.coordoneeMurEst -= LARGEUR_MAP ;
-				this.coordonneeMurOuest -= LARGEUR_MAP ;
-				this.nombreTranslateHorizontal++;
-				this.premierTranslate = true ;
-			}
-			if (this.joueur.y <= this.coordonneeMurNord)
-			{
-				this.coordonneeMurNord -= HAUTEUR_MAP;
-				this.coordoneeMurSud -= HAUTEUR_MAP;
-				this.nombreTranslateVertical++;
-				this.premierTranslate = true ;
-			}
-			if (this.joueur.y >= this.coordoneeMurSud)
-			{
-				this.coordonneeMurNord += HAUTEUR_MAP ;
-				this.coordoneeMurSud += HAUTEUR_MAP ;
-				this.nombreTranslateVertical--;
-				this.premierTranslate = true ;
-			}			
-
+		this.joueur.doitTranslate();
+		g.translate(this.joueur.getNombreTranslateHorizontal()*LARGEUR_MAP, this.joueur.getNombreTranslateVertical()*HAUTEUR_MAP);
+		
 
 		this.map.render(0, 0, 0);
 		this.map.render(0, 0, 1);
@@ -128,7 +98,8 @@ public class Jeux extends BasicGame
 			g.drawString("coordonneeMurEst : "+this.coordoneeMurEst,this.coordonneeMurOuest+20, this.coordonneeMurNord+100);
 			g.drawString("coordonneeMurSud : "+this.coordoneeMurSud,this.coordonneeMurOuest+20, this.coordonneeMurNord+120);
 			g.drawString("coordonneeMurOuest : "+this.coordonneeMurOuest,this.coordonneeMurOuest+20, this.coordonneeMurNord+140);
-			g.drawString("premierTranslate : "+this.premierTranslate, this.coordonneeMurOuest+20, this.coordonneeMurNord+160);
+		
+			
 		}
 		
 	}
@@ -270,7 +241,7 @@ public class Jeux extends BasicGame
 	{
 		try
 		{
-			AppGameContainer app = new AppGameContainer(new Jeux());
+			AppGameContainer app = new AppGameContainer(new DeplacementState());
 			app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP, false);
 			
 			//app.setDisplayMode(900, 900, false);app.setShowFPS(true);

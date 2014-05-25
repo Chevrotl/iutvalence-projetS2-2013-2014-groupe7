@@ -22,7 +22,19 @@ public class Joueur extends Personnage
 	 * feuille de sprite du personnage du joueur
 	 */
 	private SpriteSheet spriteJoueur;
+	
+	
+	/** Coordonnée des murs en fonction de la position du personnage */
+	private int coordonneeMurNord = 832;
+	private int coordoneeMurEst = 1152;
+	private int coordoneeMurSud = 1248;
+	private int coordonneeMurOuest = 576;
+	
+	private boolean aTranslate = false ;
 
+	private int nombreTranslateVertical = 0;
+	private int nombreTranslateHorizontal =0;
+	
 	
 	/**
 	 * constructeur
@@ -35,7 +47,7 @@ public class Joueur extends Personnage
 	{
 		super(x,y, orientation);
 		
-		
+
 		
 		this.nomDuJoueur = nomDuJoueur ;
 		
@@ -119,10 +131,56 @@ public class Joueur extends Personnage
 		}
 		}
 		return null;
-		
-		
-		
+	
+	}
+	
 
+	
+		public void doitTranslate()
+		{
+			if (this.x >= this.coordoneeMurEst)
+			{
+				this.coordoneeMurEst += DeplacementState.LARGEUR_MAP ;
+				this.coordonneeMurOuest += DeplacementState.LARGEUR_MAP ;
+				this.nombreTranslateHorizontal-- ;
+				this.aTranslate = true ;
+			}
+			if (this.x <= this.coordonneeMurOuest)
+			{
+				this.coordoneeMurEst -= DeplacementState.LARGEUR_MAP ;
+				this.coordonneeMurOuest -= DeplacementState.LARGEUR_MAP ;
+				this.nombreTranslateHorizontal++;
+				this.aTranslate = true ;
+			}
+			if (this.y <= this.coordonneeMurNord)
+			{
+				this.coordonneeMurNord -= DeplacementState.HAUTEUR_MAP;
+				this.coordoneeMurSud -= DeplacementState.HAUTEUR_MAP;
+				this.nombreTranslateVertical++;
+				this.aTranslate = true ;
+			}
+			if (this.y >= this.coordoneeMurSud)
+			{
+				this.coordonneeMurNord += DeplacementState.HAUTEUR_MAP ;
+				this.coordoneeMurSud += DeplacementState.HAUTEUR_MAP ;
+				this.nombreTranslateVertical--;
+				this.aTranslate = true ;
+			}			
+
+		}
+		
+	
+	public int getNombreTranslateVertical()
+	{
+		return this.nombreTranslateVertical;
 	}
 
+	public int getNombreTranslateHorizontal()
+	{
+		return this.nombreTranslateHorizontal;
+	}
+	
+	
+	
 }
+	

@@ -72,6 +72,7 @@ public class Personnage
 		protected  float caseAAtteindreYNord  ;
 		protected float caseAAtteindreYSud  ; 
 
+
 		//lors du premier deplacement sur la carte, les coordonnée du deplacement ne se modifient pas de la meme maniere
 		//on est oblige de separer le premier deplacement des autres
 		protected boolean aDejaBougeX = false;
