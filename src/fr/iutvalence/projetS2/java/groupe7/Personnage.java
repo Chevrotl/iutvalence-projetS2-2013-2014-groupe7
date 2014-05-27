@@ -16,70 +16,72 @@ public class Personnage
 	 * vie par defaut
 	 */
 	private static final int VIE_PAR_DEFAUT = 100 ;
-	
+
 	/**
 	 * Nombre d'attaque speciale par defaut en stock
 	 */
 	private static final int ATCK_SPECIALE_EN_STOCK_PAR_DEFAUT = 1 ;
-	
+
 	/**
 	 * nombre de soin par defaut en stock
 	 */
 	private static final int SOIN_EN_STOCK_PAR_DEFAUT = 1 ;
-	
+
 	/**
 	 * Vie du personnage
 	 */
 	private int vie ;
-	
+
 	/**
 	 * nombre d'attaque speciale disponible
 	 */
 	private int atckSpecialeEnStock ;
-	
+
 	/**
 	 * nombre de soin disponible
 	 */
 	private int soinsEnStock ;
-	
+
 	/**
 	 * orientation du personage
 	 */
 	private Orientation orientationPersonnage ;
-	
 
-	
+
+
 	/**
 	 * Booleen pour savoir si le personnage est en mouvement ou non / partie graphique
 	 */
 	public boolean estEnMouvement = false  ;
-	
+
 	/**
 	 * l'animation d'un sprited'un personnage
 	 */
 	protected Animation[] animationSprite = new Animation[8];
-	
+
 
 	/** position x du personnage */
 	protected float x ;
-	
+
 	/** position y du personnage */
 	protected float y ;
-	
+
 	//utile pour le deplacement case par case, = aux coordonnée de pop du joueur
-		protected float caseAAtteindreXEst  ;
-		protected float caseAAtteindreXOuest  ;
-		protected  float caseAAtteindreYNord  ;
-		protected float caseAAtteindreYSud  ; 
+	protected float caseAAtteindreXEst  ;
+	protected float caseAAtteindreXOuest  ;
+	protected  float caseAAtteindreYNord  ;
+	protected float caseAAtteindreYSud  ; 
 
 
-		//lors du premier deplacement sur la carte, les coordonnée du deplacement ne se modifient pas de la meme maniere
-		//on est oblige de separer le premier deplacement des autres
-		protected boolean aDejaBougeX = false;
-		protected boolean aDejaBougeY = false;
-		
-		
-		/**
+	//lors du premier deplacement sur la carte, les coordonnée du deplacement ne se modifient pas de la meme maniere
+	//on est oblige de separer le premier deplacement des autres
+	protected boolean aDejaBougeX = false;
+	protected boolean aDejaBougeY = false;
+
+	protected int numeroDirection ; 
+
+
+	/**
 	 * constructeur general, ou l'on attribut seulement une orientaion et une position au personnage crée
 	 * @param x position X
 	 * @param y position Y
@@ -190,7 +192,7 @@ public class Personnage
 	{
 		return this.x ;
 	}
-	
+
 	/**
 	 * accesseur en lecture position y du personnage
 	 * @return y (position y du personnage)
@@ -199,19 +201,19 @@ public class Personnage
 	{
 		return this.y ;
 	}
-	
-	
+
+
 	/**
 	 * accesseur en ecriture de l'attribut de la position du personnage
 	 * @param positionPersonnage position future du personnage
 	 */
 	public void setPositionPersonnage(Position positionPersonnage)
 	{
-		
+
 		this.x = positionPersonnage.X ;
 		this.y = positionPersonnage.Y ;
 	}
-	
+
 	/**
 	 * accesseur en ecriture de la position X du personnage
 	 * @param x position.X
@@ -220,7 +222,7 @@ public class Personnage
 	{
 		this.x = x;
 	}
-	
+
 	/**
 	 * accesseur en ecriture de la position X du personnage
 	 * @param y position.Y
@@ -229,14 +231,19 @@ public class Personnage
 	{
 		this.y = y ;
 	}
-	
-/**
- * accesseur en lecture du tableau d'animation du sprite
- * @return animationSprite
- */
+
+	/**
+	 * accesseur en lecture du tableau d'animation du sprite
+	 * @return animationSprite
+	 */
 	public Animation[] getAnimationSprite()
 	{
 		return this.animationSprite;
+	}
+
+	public Animation getAnimationPersonnage()
+	{
+		return this.animationSprite[(this.numeroDirection + (this.estEnMouvement ? 4 : 0))] ;
 	}
 
 	/**
@@ -246,39 +253,46 @@ public class Personnage
 	public Position deplacementAleatoire()
 	{ 
 		Position positionARenvoyer = new Position();
-		
+
 		boolean nombreAleatoire1 = new Random().nextBoolean() ;
 		boolean nombreAleatoire2 = new Random().nextBoolean() ;
-		
+
 		if(nombreAleatoire1)
 		{
 			if(nombreAleatoire2)
 			{
-				positionARenvoyer.X += 32 ;
-				
+				this.orientationPersonnage = Orientation.EST ;
+				this.estEnMouvement = true ;
+				this.numeroDirection = 3 ;
 			}
 			else
 			{
-				positionARenvoyer.X -= 32 ;
+				this.orientationPersonnage = Orientation.OUEST ;
+				this.estEnMouvement = true ;
+				this.numeroDirection = 1 ;
 			}
 		}
 		else
 		{
 			if(nombreAleatoire2)
 			{
-				positionARenvoyer.Y += 32 ;
+				this.orientationPersonnage = Orientation.SUD ;
+				this.estEnMouvement = true ;
+				this.numeroDirection = 2 ;
 			}
 			else
 			{
-				positionARenvoyer.Y -= 32 ;
+				this.orientationPersonnage = Orientation.NORD ;
+				this.estEnMouvement = true ;
+				this.numeroDirection = 0 ;
 			}
 		}
 		return positionARenvoyer ;
-		
-		
+
+
 	}
 
-	//TODO faire marcher la methode
+
 	public void  deplacementDUneCase(float futurePositionX, float futurePositionY)
 	{
 		switch(this.getOrientationPersonnage())
@@ -368,8 +382,8 @@ public class Personnage
 		}
 
 	}
-		
-	
-	
-	
+
+
+
+
 }

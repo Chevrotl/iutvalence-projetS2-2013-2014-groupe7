@@ -44,7 +44,7 @@
  </layer>
  <layer name="element en lair" width="54" height="39">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWjYBSMglFAL3CIjYGhjRXCPsw2sG6hBvgC9cMlJH9dZkOVG+oA5q/hBoarv4YyqGAZGL2jYBSMglEwCgYecAHrZW4g5hmA+pkXaCcfjeyVAporDcQyA+AvWaCdcjSyVwtorjYQ6wyAv3SBduqNtuNGwQCBMgranMh6p1BgDrLemxSYQ4nekQSKgf36IjYIXUIGG0YPNlAKdFMZG3a6GYhbgLgJysalrmwQ+osQWMQGwcMFGAH9YgzES6D+gvFHwSigN1g2DNLdXBZUmhCYw4JKD1UwHOJuuIPROBoFhAAA72qBaeggAAA=
+   H4sIAAAAAAAAC+3XSQ6CMBQG4C6gC6cDOB3AaaE3c2hcq0dwqRtjPIjeQFfewwP4GyBCIqmxgUL9v+TlldD28VIWIAQREeXlLN/ji0yfVxaPsIdrrJebTN4jou8sPTtriYjIvoovRBVR8/OvXUfNRkZ1m9i3hWhb6KuDmt2M6vawbx8xsNDXEDVHFuoSvSiDb8742q3BPvG1d4N9TNb+kxn+66cyyPMfxlEumgWeScnPeY3YIFbhOG2eKmBfOgcZhCvG6GWCOIZ9RddEeTs58N7tvWTW2XnJXFYunJ3reEak8wRMszQ46CAAAA==
   </data>
  </layer>
  <layer name="bloc" width="54" height="39" visible="0">

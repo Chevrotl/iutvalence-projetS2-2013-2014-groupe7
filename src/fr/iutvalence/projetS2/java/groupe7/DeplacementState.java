@@ -33,8 +33,6 @@ public class DeplacementState extends BasicGame
 
 	private Zombie zombie;
 
-	// provient du blog, permet l'animation du sprite
-	private Animation[] animations = new Animation[8];
 	private int numeroDirection = 0;
 
 	TiledMap map;
@@ -47,7 +45,9 @@ public class DeplacementState extends BasicGame
 	private int nombreTranslateVertical = 0;
 
 	private boolean debogueurActive;
-
+	
+	private int time = 0 ;
+	
 	public DeplacementState()
 	{
 		super("Jeux");
@@ -75,7 +75,7 @@ public class DeplacementState extends BasicGame
 		g.fillOval(this.joueur.x - 10, this.joueur.y - 4, 20, 10);
 
 		g.drawAnimation(
-				this.joueur.getAnimationSprite()[(this.numeroDirection + (this.joueur.estEnMouvement ? 4 : 0))],
+				this.joueur.getAnimationPersonnage(),
 				this.joueur.x - 16, this.joueur.y - 32); // on baisse la position pour avoir la position sous les pieds
 
 		// g.drawAnimation(this.zombie.getAnimationSprite()[(this.numeroDirection
@@ -87,18 +87,21 @@ public class DeplacementState extends BasicGame
 
 		// debugueur, permet d'afficher des variables
 
+		container.setShowFPS(this.debogueurActive);
 		if (this.debogueurActive)
 		{
 			Color colorPoliceDebug = new Color((float) 0.8, 0, 0);
 			g.setColor(colorPoliceDebug);
-
-			g.drawString("X : " + this.joueur.x + " Y : " + this.joueur.y,  this.coordonneeMurOuest+20, this.coordonneeMurNord+20);
-			g.drawString("estUneCaseInterdite : " + this.estUneCaseInterdite(this.joueur.x, this.joueur.y), this.coordonneeMurOuest+20, this.coordonneeMurNord+60);
-			g.drawString("coordonneeMurNord : "+this.coordonneeMurNord,this.coordonneeMurOuest+20, this.coordonneeMurNord+80);
-			g.drawString("coordonneeMurEst : "+this.coordoneeMurEst,this.coordonneeMurOuest+20, this.coordonneeMurNord+100);
-			g.drawString("coordonneeMurSud : "+this.coordoneeMurSud,this.coordonneeMurOuest+20, this.coordonneeMurNord+120);
-			g.drawString("coordonneeMurOuest : "+this.coordonneeMurOuest,this.coordonneeMurOuest+20, this.coordonneeMurNord+140);
+			
 		
+			g.drawString("X : " + this.joueur.x + " Y : " + this.joueur.y,  this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+20);
+			g.drawString("estUneCaseInterdite : " + this.estUneCaseInterdite(this.joueur.x, this.joueur.y), this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+60);
+			g.drawString("coordonneeMurNord : "+this.joueur.getCoordonneeMurNord(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+80);
+			g.drawString("coordonneeMurEst : "+this.joueur.getCoordoneeMurEst(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+100);
+			g.drawString("coordonneeMurSud : "+this.joueur.getCoordoneeMurSud(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+120);
+			g.drawString("coordonneeMurOuest : "+this.joueur.getCoordonneeMurOuest(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+140);
+			g.drawString("time : "+this.time,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+160);
+			
 			
 		}
 		
@@ -120,6 +123,8 @@ public class DeplacementState extends BasicGame
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException
 	{
+		//delta = 1 milisecondes
+		this.time += delta ;
 		
 		/**
 		 * Future position du personnage, servira a savoir si il peut se
@@ -131,8 +136,17 @@ public class DeplacementState extends BasicGame
 		// calcul des coordonnée pour le deplacement case par case
 		this.joueur.deplacementDUneCase(futurePositionX, futurePositionY);
 
+		if(delta % 1000 == 0)
+		{
+			this.zombie.deplacementAleatoire() ;
+		}
+		
+		
+		
+		
 		// Mouvement fluide, besoin de laisser ca la car intevention de la
 		// variable delta
+		
 		if (this.joueur.estEnMouvement)
 		{
 
@@ -211,22 +225,22 @@ public class DeplacementState extends BasicGame
 		case Input.KEY_UP:
 			this.joueur.setOrientationPersonnage(Orientation.NORD);
 			this.joueur.estEnMouvement = true;
-			this.numeroDirection = 0;
+			this.joueur.numeroDirection = 0;
 			break;
 		case Input.KEY_LEFT:
 			this.joueur.setOrientationPersonnage(Orientation.OUEST);
 			this.joueur.estEnMouvement = true;
-			this.numeroDirection = 1;
+			this.joueur.numeroDirection = 1;
 			break;
 		case Input.KEY_DOWN:
 			this.joueur.setOrientationPersonnage(Orientation.SUD);
 			this.joueur.estEnMouvement = true;
-			this.numeroDirection = 2;
+			this.joueur.numeroDirection = 2;
 			break;
 		case Input.KEY_RIGHT:
 			this.joueur.setOrientationPersonnage(Orientation.EST);
 			this.joueur.estEnMouvement = true;
-			this.numeroDirection = 3;
+			this.joueur.numeroDirection = 3;
 			break;
 
 		case Input.KEY_F2:
@@ -243,8 +257,7 @@ public class DeplacementState extends BasicGame
 		{
 			AppGameContainer app = new AppGameContainer(new DeplacementState());
 			app.setDisplayMode(LARGEUR_MAP, HAUTEUR_MAP, false);
-			
-			//app.setDisplayMode(900, 900, false);app.setShowFPS(true);
+			app.setShowFPS(false);
 			app.start();
 		}
 		catch (SlickException e)

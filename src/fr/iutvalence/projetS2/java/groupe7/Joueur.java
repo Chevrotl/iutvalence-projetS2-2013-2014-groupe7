@@ -179,6 +179,35 @@ public class Joueur extends Personnage
 	{
 		return this.nombreTranslateHorizontal;
 	}
+
+
+
+	public int getCoordonneeMurNord()
+	{
+		return this.coordonneeMurNord;
+	}
+
+
+
+	public int getCoordoneeMurEst()
+	{
+		return this.coordoneeMurEst;
+	}
+
+
+
+	public int getCoordoneeMurSud()
+	{
+		return this.coordoneeMurSud;
+	}
+
+
+
+	public int getCoordonneeMurOuest()
+	{
+		return this.coordonneeMurOuest;
+	}
+	
 	
 	
 	
