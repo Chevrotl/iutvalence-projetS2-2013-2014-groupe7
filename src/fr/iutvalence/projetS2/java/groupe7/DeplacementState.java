@@ -35,7 +35,7 @@ public class DeplacementState extends BasicGame
 
 	private int numeroDirection = 0;
 
-	TiledMap map;
+	private static TiledMap map;
 	private int coordonneeMurNord = 832;
 	private int coordoneeMurEst = 1152;
 	private int coordoneeMurSud = 1248;
@@ -45,13 +45,21 @@ public class DeplacementState extends BasicGame
 	private int nombreTranslateVertical = 0;
 
 	private boolean debogueurActive;
-	
+
 	private int time = 0 ;
-	
+
+	private boolean uneSecondeEcoulee = false ;
+	private int nombreSecondeEcoulee = 0 ;
+
 	public DeplacementState()
 	{
 		super("Jeux");
 
+	}
+
+	public static TiledMap getMap()
+	{
+		return map;
 	}
 
 	@Override
@@ -61,10 +69,10 @@ public class DeplacementState extends BasicGame
 		// decalage de l'affichage de la map pour venir sur la carte ou spawn le
 		// joueur
 		g.translate(-LARGEUR_MAP, -2 * HAUTEUR_MAP);
-		
+
 		this.joueur.doitTranslate();
 		g.translate(this.joueur.getNombreTranslateHorizontal()*LARGEUR_MAP, this.joueur.getNombreTranslateVertical()*HAUTEUR_MAP);
-		
+
 
 		this.map.render(0, 0, 0);
 		this.map.render(0, 0, 1);
@@ -78,11 +86,10 @@ public class DeplacementState extends BasicGame
 				this.joueur.getAnimationPersonnage(),
 				this.joueur.x - 16, this.joueur.y - 32); // on baisse la position pour avoir la position sous les pieds
 
-		// g.drawAnimation(this.zombie.getAnimationSprite()[(this.numeroDirection
-		// + (this.joueur.estEnMouvement ? 4 : 0))],
-		// this.zombie.x-16,this.zombie.y-32);
+		g.drawAnimation(this.zombie.getAnimationPersonnage(),
+				this.zombie.x-16,this.zombie.y-32);
 
-		
+
 		this.map.render(0, 0, 3);
 
 		// debugueur, permet d'afficher des variables
@@ -92,19 +99,27 @@ public class DeplacementState extends BasicGame
 		{
 			Color colorPoliceDebug = new Color((float) 0.8, 0, 0);
 			g.setColor(colorPoliceDebug);
-			
-		
+
+
 			g.drawString("X : " + this.joueur.x + " Y : " + this.joueur.y,  this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+20);
-			g.drawString("estUneCaseInterdite : " + this.estUneCaseInterdite(this.joueur.x, this.joueur.y), this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+60);
-			g.drawString("coordonneeMurNord : "+this.joueur.getCoordonneeMurNord(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+80);
-			g.drawString("coordonneeMurEst : "+this.joueur.getCoordoneeMurEst(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+100);
-			g.drawString("coordonneeMurSud : "+this.joueur.getCoordoneeMurSud(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+120);
-			g.drawString("coordonneeMurOuest : "+this.joueur.getCoordonneeMurOuest(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+140);
+			//g.drawString("estUneCaseInterdite : " + this.estUneCaseInterdite(this.joueur.x, this.joueur.y), this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+60);
+			//			g.drawString("coordonneeMurNord : "+this.joueur.getCoordonneeMurNord(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+80);
+			//			g.drawString("coordonneeMurEst : "+this.joueur.getCoordoneeMurEst(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+100);
+			//			g.drawString("coordonneeMurSud : "+this.joueur.getCoordoneeMurSud(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+120);
+			//			g.drawString("coordonneeMurOuest : "+this.joueur.getCoordonneeMurOuest(),this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+140);
+			g.drawString("caseAAtteindreNord : "+this.joueur.caseAAtteindreYNord,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+80);
+			g.drawString("caseAAtteindreOuest : "+this.joueur.caseAAtteindreXOuest,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+100);
+			g.drawString("caseAAtteindreSud : "+this.joueur.caseAAtteindreYSud,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+120);
+			g.drawString("caseAAtteindreEst : "+this.joueur.caseAAtteindreXEst,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+140);
+
+
 			g.drawString("time : "+this.time,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+160);
-			
-			
+			g.drawString("uneSecondeEcoulee : "+this.uneSecondeEcoulee,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+180);
+			g.drawString("nombreSecondesEcoulees : "+this.nombreSecondeEcoulee,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+200);
+
+
 		}
-		
+
 	}
 
 
@@ -114,7 +129,7 @@ public class DeplacementState extends BasicGame
 
 		this.map = new TiledMap("graphismes/maps/new map/MapCentrale.tmx");
 
-		// this.zombie = new Zombie(100, 100, Orientation.EST);
+		this.zombie = new Zombie(1056, 1024, Orientation.EST);
 
 		this.joueur = new Joueur(POSITION_SPAWN_JOUEUR_X, POSITION_SPAWN_JOUEUR_Y, Orientation.NORD, "Link");
 
@@ -125,93 +140,27 @@ public class DeplacementState extends BasicGame
 	{
 		//delta = 1 milisecondes
 		this.time += delta ;
-		
-		/**
-		 * Future position du personnage, servira a savoir si il peut se
-		 * deplacer sur une case qui n'est pas bloquée
-		 */
-		float futurePositionX = this.joueur.x;
-		float futurePositionY = this.joueur.y;
-
-		// calcul des coordonnée pour le deplacement case par case
-		this.joueur.deplacementDUneCase(futurePositionX, futurePositionY);
-
-		if(delta % 1000 == 0)
+		//TODO Creer une methode qui permet de creer un decalage du nombre de seconde souhaite (decoupe delta en un modulo)
+		if(this.time % 3000 == 0)
 		{
-			this.zombie.deplacementAleatoire() ;
+			this.uneSecondeEcoulee = true ;
+			this.nombreSecondeEcoulee++ ;
 		}
-		
-		
-		
-		
-		// Mouvement fluide, besoin de laisser ca la car intevention de la
-		// variable delta
+		else
+			this.uneSecondeEcoulee = false ;
+
+
+		//	
+		//		if(this.uneSecondeEcoulee)
+		//		{
+		//			this.zombie.deplacementAleatoire() ;
+		//		}	
+		//		
 		
 		if (this.joueur.estEnMouvement)
-		{
-
-			switch (this.joueur.getOrientationPersonnage())
-			{
-			case NORD:
-				futurePositionY = (this.joueur.y -= .1f * delta);
-				break;
-			case OUEST:
-				futurePositionX = (this.joueur.x -= .1f * delta);
-				break;
-			case SUD:
-				futurePositionY = (this.joueur.y += .1f * delta);
-				break;
-			case EST:
-				futurePositionX = (this.joueur.x += .1f * delta);
-				break;
-			default:
-				break;
-
-			}
-
-			// detection des collision pour le joueur humain
-			if (!estUneCaseInterdite(futurePositionX, futurePositionY))
-			{
-				this.joueur.setPositionPersonnageX(futurePositionX);
-				this.joueur.setPositionPersonnageY(futurePositionY);
-			}
-			else
-			{
-				this.joueur.estEnMouvement = false;
-			}
-
+		{	
+			this.joueur.deplacementDUneCase(delta);
 		}
-
-	}
-
-	/**
-	 * Methode permettant de renvoyer un boolean suivant si le personnage a le
-	 * droit d'aller sur la case
-	 * 
-	 * @param floatPositionX
-	 *            future position X du personnage
-	 * @param floatPositionY
-	 *            future position Y du personnage
-	 * @return boolean true : il peut se deplacer, false il ne peut pas
-	 */
-	public boolean estUneCaseInterdite(float floatPositionX, float floatPositionY)
-	{
-
-		// Changement de type de float en int car la methode getTileImage a
-		// comme parametre des int.
-		// La case interdite se fait suivant la position absolue de la case, et
-		// non pas sa position en pixel : on convertit
-		int positionX = ((int) floatPositionX) / this.map.getTileWidth();
-		int positionY = ((int) floatPositionY) / this.map.getTileHeight();
-
-		// Methode permetant de renvoyer qu'un certain type de case (en
-		// consequence, les case ou le perso ne peut pas bouger)
-		Image caseInterdite = this.map.getTileImage(positionX, positionY, this.map.getLayerIndex("bloc"));
-
-		// On verifie si il existe une case bloque, si oui le personnage ne
-		// bouge pas, sinon il peut se deplacer
-		return (caseInterdite != null);
-
 	}
 
 	/**
@@ -219,7 +168,7 @@ public class DeplacementState extends BasicGame
 	 */
 	public void keyPressed(int key, char c)
 	{
-		
+
 		switch (key)
 		{
 		case Input.KEY_UP:

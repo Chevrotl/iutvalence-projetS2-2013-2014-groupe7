@@ -3,6 +3,7 @@ package fr.iutvalence.projetS2.java.groupe7;
 import java.util.Random;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Image;
 
 /**
  * classe représentant un personnage (zombie comme humain)
@@ -293,23 +294,30 @@ public class Personnage
 	}
 
 
-	public void  deplacementDUneCase(float futurePositionX, float futurePositionY)
+	public void  deplacementDUneCase(int delta)
 	{
-		switch(this.getOrientationPersonnage())
+		float futurePositionX = this.x ;
+		float futurePositionY = this.y ;
+		
+		
+		switch(this.orientationPersonnage)
 		{
 		case NORD: {
+			
+			futurePositionY = (this.y -= .1f * delta);
+
 			if((int)futurePositionY < (int)this.caseAAtteindreYNord)
 			{
 				if(this.aDejaBougeY)
 				{
-					this.estEnMouvement = false ;
+					
 					this.caseAAtteindreYNord -= 32;
 					this.caseAAtteindreYSud -= 32 ;
 					//comme la position est de type float, la valeur n'est pas ronde, cela crée des problemes pour pouvoir se deplacer correctement.
 					//on remet la position du personnage a jour pour eviter tout probleme
-					this.setPositionPersonnageY(this.caseAAtteindreYSud);
-
-
+					this.y =this.caseAAtteindreYSud;					
+					this.estEnMouvement = false ;
+					
 				}
 				else
 				{
@@ -319,9 +327,14 @@ public class Personnage
 					this.aDejaBougeY = true;
 				}
 			}	
-		}break;
+		}
+		break;
 
 		case OUEST: {
+			
+			futurePositionX = (this.x -= .1f * delta);
+			
+			
 			if((int)futurePositionX < (int)this.caseAAtteindreXOuest)
 			{
 				if(this.aDejaBougeX)
@@ -329,7 +342,7 @@ public class Personnage
 					this.estEnMouvement = false ;
 					this.caseAAtteindreXEst -= 32;
 					this.caseAAtteindreXOuest -= 32;
-					this.setPositionPersonnageX(this.caseAAtteindreXEst);
+					this.x =this.caseAAtteindreXOuest;
 				}
 				else
 				{
@@ -338,9 +351,13 @@ public class Personnage
 					this.aDejaBougeX = true ;
 				}
 			}
-		}break;
+		}
+		break;
 
 		case SUD: {
+			
+			futurePositionY = (this.y += .1f * delta);
+			
 			if((int)futurePositionY > (int)this.caseAAtteindreYSud)
 			{
 				if(this.aDejaBougeY)
@@ -348,7 +365,7 @@ public class Personnage
 					this.estEnMouvement = false ;
 					this.caseAAtteindreYNord += 32;
 					this.caseAAtteindreYSud += 32 ;
-					this.setPositionPersonnageY(this.caseAAtteindreYNord);
+					this.y =this.caseAAtteindreYNord;
 
 				}
 				else
@@ -358,9 +375,13 @@ public class Personnage
 					this.aDejaBougeY = true;;
 				}
 			}	
-		}break;
+		}
+		break;
 
 		case EST: {
+			
+			futurePositionX = (this.x += .1f * delta);
+			
 			if((int)futurePositionX > (int)this.caseAAtteindreXEst)
 			{
 				if(this.aDejaBougeX)
@@ -368,7 +389,7 @@ public class Personnage
 					this.estEnMouvement = false ;
 					this.caseAAtteindreXEst += 32;
 					this.caseAAtteindreXOuest += 32;
-					this.setPositionPersonnageX(this.caseAAtteindreXOuest);
+					this.x =this.caseAAtteindreXEst;
 				}
 				else
 				{
@@ -378,11 +399,50 @@ public class Personnage
 				}
 
 			}
-		}break;
+		}
+		break;
+		}
+		
+		if (!estUneCaseInterdite(futurePositionX, futurePositionY))
+		{
+			this.x = futurePositionX;
+			this.y = futurePositionY;
+		}
+		else
+		{
+			this.estEnMouvement = false;
 		}
 
 	}
 
+	/**
+	 * Methode permettant de renvoyer un boolean suivant si le personnage a le
+	 * droit d'aller sur la case
+	 * 
+	 * @param floatPositionX
+	 *            future position X du personnage
+	 * @param floatPositionY
+	 *            future position Y du personnage
+	 * @return boolean true : il peut se deplacer, false il ne peut pas
+	 */	public boolean estUneCaseInterdite(float floatPositionX, float floatPositionY)
+	{
+
+		// Changement de type de float en int car la methode getTileImage a
+		// comme parametre des int.
+		// La case interdite se fait suivant la position absolue de la case, et
+		// non pas sa position en pixel : on convertit
+		int positionX = ((int) floatPositionX) /  DeplacementState.getMap().getTileWidth();
+		int positionY = ((int) floatPositionY) / DeplacementState.getMap().getTileHeight();
+
+		// Methode permetant de renvoyer qu'un certain type de case (en
+		// consequence, les case ou le perso ne peut pas bouger)
+		Image caseInterdite = DeplacementState.getMap().getTileImage(positionX, positionY, DeplacementState.getMap().getLayerIndex("bloc"));
+
+		// On verifie si il existe une case bloque, si oui le personnage ne
+		// bouge pas, sinon il peut se deplacer
+		return (caseInterdite != null);
+
+	}
 
 
 
