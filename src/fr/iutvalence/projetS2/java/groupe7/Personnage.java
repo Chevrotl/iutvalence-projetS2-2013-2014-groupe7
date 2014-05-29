@@ -74,6 +74,7 @@ public class Personnage
 	protected float caseAAtteindreYSud  ; 
 
 
+	protected boolean premierChangementDirection = false ;
 	//lors du premier deplacement sur la carte, les coordonnée du deplacement ne se modifient pas de la meme maniere
 	//on est oblige de separer le premier deplacement des autres
 	protected boolean aDejaBougeX = false;
@@ -294,30 +295,38 @@ public class Personnage
 	}
 
 
+	// Quand on appui sur la touche, il enregistre un deplacement alors que c'est un changement d'orientation
 	public void  deplacementDUneCase(int delta)
 	{
 		float futurePositionX = this.x ;
 		float futurePositionY = this.y ;
-		
-		
+
+
 		switch(this.orientationPersonnage)
 		{
 		case NORD: {
-			
-			futurePositionY = (this.y -= .1f * delta);
 
-			if((int)futurePositionY < (int)this.caseAAtteindreYNord)
+			if(this.premierChangementDirection)
+				futurePositionY = (this.y -= .1f * delta);
+			//Il ne faut pas que ca se produise direct
+			//Sur la version precedente, on ne se deplacement des le premier mouvement du clavier
+			//refaire une condition avec un autre booleen aDejaBouge
+
+
+
+			if((int)futurePositionY <= (int)this.caseAAtteindreYNord)
 			{
 				if(this.aDejaBougeY)
 				{
-					
+
 					this.caseAAtteindreYNord -= 32;
 					this.caseAAtteindreYSud -= 32 ;
 					//comme la position est de type float, la valeur n'est pas ronde, cela crée des problemes pour pouvoir se deplacer correctement.
 					//on remet la position du personnage a jour pour eviter tout probleme
-					this.y =this.caseAAtteindreYSud;					
+					this.y =this.caseAAtteindreYSud;
 					this.estEnMouvement = false ;
-					
+					return;
+
 				}
 				else
 				{
@@ -325,16 +334,19 @@ public class Personnage
 					this.caseAAtteindreYNord -= 32;
 					//les coordonnée de la case a atteindre sud ne change pas du coup
 					this.aDejaBougeY = true;
+					this.premierChangementDirection = true;
 				}
+
 			}	
 		}
 		break;
 
 		case OUEST: {
-			
-			futurePositionX = (this.x -= .1f * delta);
-			
-			
+
+			if(this.premierChangementDirection)
+				futurePositionX = (this.x -= .1f * delta);
+
+
 			if((int)futurePositionX < (int)this.caseAAtteindreXOuest)
 			{
 				if(this.aDejaBougeX)
@@ -343,6 +355,7 @@ public class Personnage
 					this.caseAAtteindreXEst -= 32;
 					this.caseAAtteindreXOuest -= 32;
 					this.x =this.caseAAtteindreXOuest;
+					return;
 				}
 				else
 				{
@@ -355,9 +368,10 @@ public class Personnage
 		break;
 
 		case SUD: {
-			
-			futurePositionY = (this.y += .1f * delta);
-			
+
+			if(this.premierChangementDirection)
+				futurePositionY = (this.y += .1f * delta);
+
 			if((int)futurePositionY > (int)this.caseAAtteindreYSud)
 			{
 				if(this.aDejaBougeY)
@@ -366,6 +380,7 @@ public class Personnage
 					this.caseAAtteindreYNord += 32;
 					this.caseAAtteindreYSud += 32 ;
 					this.y =this.caseAAtteindreYNord;
+					return;
 
 				}
 				else
@@ -379,9 +394,10 @@ public class Personnage
 		break;
 
 		case EST: {
-			
-			futurePositionX = (this.x += .1f * delta);
-			
+
+			if(this.premierChangementDirection)
+				futurePositionX = (this.x += .1f * delta);
+
 			if((int)futurePositionX > (int)this.caseAAtteindreXEst)
 			{
 				if(this.aDejaBougeX)
@@ -390,6 +406,7 @@ public class Personnage
 					this.caseAAtteindreXEst += 32;
 					this.caseAAtteindreXOuest += 32;
 					this.x =this.caseAAtteindreXEst;
+					return;
 				}
 				else
 				{
@@ -402,7 +419,8 @@ public class Personnage
 		}
 		break;
 		}
-		
+
+		//Quand on est egal a CaseAAtteindre, on passe une fois par ce if, d'ou le bug des coordonnés non rondes.
 		if (!estUneCaseInterdite(futurePositionX, futurePositionY))
 		{
 			this.x = futurePositionX;
@@ -425,24 +443,24 @@ public class Personnage
 	 *            future position Y du personnage
 	 * @return boolean true : il peut se deplacer, false il ne peut pas
 	 */	public boolean estUneCaseInterdite(float floatPositionX, float floatPositionY)
-	{
+	 {
 
-		// Changement de type de float en int car la methode getTileImage a
-		// comme parametre des int.
-		// La case interdite se fait suivant la position absolue de la case, et
-		// non pas sa position en pixel : on convertit
-		int positionX = ((int) floatPositionX) /  DeplacementState.getMap().getTileWidth();
-		int positionY = ((int) floatPositionY) / DeplacementState.getMap().getTileHeight();
+		 // Changement de type de float en int car la methode getTileImage a
+		 // comme parametre des int.
+		 // La case interdite se fait suivant la position absolue de la case, et
+		 // non pas sa position en pixel : on convertit
+		 int positionX = ((int) floatPositionX) /  DeplacementState.getMap().getTileWidth();
+		 int positionY = ((int) floatPositionY) / DeplacementState.getMap().getTileHeight();
 
-		// Methode permetant de renvoyer qu'un certain type de case (en
-		// consequence, les case ou le perso ne peut pas bouger)
-		Image caseInterdite = DeplacementState.getMap().getTileImage(positionX, positionY, DeplacementState.getMap().getLayerIndex("bloc"));
+		 // Methode permetant de renvoyer qu'un certain type de case (en
+		 // consequence, les case ou le perso ne peut pas bouger)
+		 Image caseInterdite = DeplacementState.getMap().getTileImage(positionX, positionY, DeplacementState.getMap().getLayerIndex("bloc"));
 
-		// On verifie si il existe une case bloque, si oui le personnage ne
-		// bouge pas, sinon il peut se deplacer
-		return (caseInterdite != null);
+		 // On verifie si il existe une case bloque, si oui le personnage ne
+		 // bouge pas, sinon il peut se deplacer
+		 return (caseInterdite != null);
 
-	}
+	 }
 
 
 

@@ -116,6 +116,7 @@ public class DeplacementState extends BasicGame
 			g.drawString("time : "+this.time,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+160);
 			g.drawString("uneSecondeEcoulee : "+this.uneSecondeEcoulee,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+180);
 			g.drawString("nombreSecondesEcoulees : "+this.nombreSecondeEcoulee,this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+200);
+			g.drawString("OrientationPersonnage : "+this.joueur.getOrientationPersonnage(), this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+220); 
 
 
 		}
