@@ -347,14 +347,15 @@ public class Personnage
 				futurePositionX = (this.x -= .1f * delta);
 
 
-			if((int)futurePositionX < (int)this.caseAAtteindreXOuest)
+			if((int)futurePositionX <= (int)this.caseAAtteindreXOuest)
 			{
 				if(this.aDejaBougeX)
 				{
-					this.estEnMouvement = false ;
+					
 					this.caseAAtteindreXEst -= 32;
 					this.caseAAtteindreXOuest -= 32;
-					this.x =this.caseAAtteindreXOuest;
+					this.x =this.caseAAtteindreXEst;
+					this.estEnMouvement = false ;
 					return;
 				}
 				else
@@ -372,14 +373,15 @@ public class Personnage
 			if(this.premierChangementDirection)
 				futurePositionY = (this.y += .1f * delta);
 
-			if((int)futurePositionY > (int)this.caseAAtteindreYSud)
+			if((int)futurePositionY >= (int)this.caseAAtteindreYSud)
 			{
 				if(this.aDejaBougeY)
 				{
-					this.estEnMouvement = false ;
+					
 					this.caseAAtteindreYNord += 32;
 					this.caseAAtteindreYSud += 32 ;
 					this.y =this.caseAAtteindreYNord;
+					this.estEnMouvement = false ;
 					return;
 
 				}
@@ -398,14 +400,15 @@ public class Personnage
 			if(this.premierChangementDirection)
 				futurePositionX = (this.x += .1f * delta);
 
-			if((int)futurePositionX > (int)this.caseAAtteindreXEst)
+			if((int)futurePositionX >= (int)this.caseAAtteindreXEst)
 			{
 				if(this.aDejaBougeX)
 				{
-					this.estEnMouvement = false ;
+					
 					this.caseAAtteindreXEst += 32;
 					this.caseAAtteindreXOuest += 32;
-					this.x =this.caseAAtteindreXEst;
+					this.x =this.caseAAtteindreXOuest;
+					this.estEnMouvement = false ;
 					return;
 				}
 				else
