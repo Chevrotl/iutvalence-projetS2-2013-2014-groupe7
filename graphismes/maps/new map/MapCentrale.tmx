@@ -39,17 +39,17 @@
  </layer>
  <layer name="obstacle sol " width="54" height="39">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WPQ6CMBQH8JqUeie/Br2T8QISd5TRBdzUTRyNk2dw1cndA1jD4GvS0qECrf5/SfP46GtfUwgwBv9qxtvJrdvCoTaX3DadO21XAPBbeLeMN/G5dhfqPQAAqN/U4d+M5i4N4zyF/piiuVeHemhuXDHOxfJfR3Nzwzj0W2X6btHch2Vdp4qabLkAEI5exFhftkHU/NxDOeeohXkBAHRyUbbQzGXNsdDHhKwnqegXe7julawpFfqYkXqzin6ph+syGctaJ8J8DtCUgjx3x0CfwR1Xo82Wq9FXa67Gtw3Zo0LY+/toz9X47f4+oXt0CPT98sUL1wkLruggAAA=
+   H4sIAAAAAAAAC+3WvQ6CMBAH8JqU86l00HcyvoDEHWV0ATd1E0fj5DO46uTuA4hh8GpoO1Sklf8vIcdHr1xTSCsEdNVUtpPbtLlDbS65bTr12q4A4L/IfhWv9L53I/UZAAA0b+KwN+O5C00/D6o/53juxaEenhsb+jlb9nU8N9f0w9cq3brFc++WcR0NNdlyASAcg0iIYdS9dwMAfMqpOkIzK2uOqT4mbDyJoV3s4biXZU0p1ceM1ZsZ2qUejktnVNY6Jv01wK8U7Ls7BPoNbqUabTZSjb5aSTW+rNkcFWRv76OdVOO32/uEz9E+0P/LF08gRSid6CAAAA==
   </data>
  </layer>
  <layer name="element en lair" width="54" height="39">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3XSQ6CMBQG4C6gC6cDOB3AaaE3c2hcq0dwqRtjPIjeQFfewwP4GyBCIqmxgUL9v+TlldD28VIWIAQREeXlLN/ji0yfVxaPsIdrrJebTN4jou8sPTtriYjIvoovRBVR8/OvXUfNRkZ1m9i3hWhb6KuDmt2M6vawbx8xsNDXEDVHFuoSvSiDb8742q3BPvG1d4N9TNb+kxn+66cyyPMfxlEumgWeScnPeY3YIFbhOG2eKmBfOgcZhCvG6GWCOIZ9RddEeTs58N7tvWTW2XnJXFYunJ3reEak8wRMszQ46CAAAA==
+   H4sIAAAAAAAAC2NgGAWjYBSMglFAL3CIDcE+zIZb3VABX6B+uITkl8tsqHKjYBSMAuJABcvA6B0Fo2AUjIJRMPCAl5WBgY91+NktCzRXboD8RUu7dYHm6g2QvwbS7lEwCsooaHMi651CgTnIem9SYA4lekcSKAb264vYIHQJGWwYPdhAKdBNZWzY6WYgbgHiJigbl7qyQegvQmARGwQPF2AE9IsxEC+B+gvGHwWjgN5g2TBId3NZUGlCYA4LKj1UwXCIu+EORuNoFBACAGRkBfzoIAAA
   </data>
  </layer>
  <layer name="bloc" width="54" height="39" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WUQrAIAxD3ZF3/x+/hCHqlEab1j4Yk1HSRqc2peBG3gfzsDGqa6ZuZl8MGmjC114NNDf5Kt++Z0L9/tPQ5qb10tBA49nXTB9hrd8YUfvygoYvVL+K+g935ZXOSy+mNV7VWa1HSujY0mEjfOFyncjXO4OlOtp43afefXnsN07NX2tsnfDFB2p/WQF1RwaBFMvnRqHUPVv/arwWrTpH62XZFzKeCQ/7i4UMIIWrV+ggAAA=
+   H4sIAAAAAAAAC+2WwQ6AMAhD5yf7/xdPSzxMwlwVyvoSEzNJoU4mrYkdOQ/MlQ2rLk/dmX1l0EAjX99qoNnJV1+7PxutWRrR7LRfERpoKvvyzBFs84bF6NyoQIQv1LyK+g6/yrv6Xp5iRvezOrP1rCIdLp1syBd3rre5s/WFdDh1Ks4bf+CZNxiRr3yg+osF1D9SiFWYz41Or9tb/2x8FKM6rf1i9oWMz0SF/srCBU5ikOfoIAAA
   </data>
  </layer>
  <objectgroup name="Calque d'objets 1" width="54" height="39" visible="0">

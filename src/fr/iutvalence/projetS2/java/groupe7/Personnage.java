@@ -75,6 +75,9 @@ public class Personnage
 
 
 	protected boolean premierChangementDirection = false ;
+	protected boolean estUnChangementDeDirection = false ;
+	private int  deuxFoisLeMemeDeplacement = 0 ;
+	private Orientation orientationAleatoirePrecedente = Orientation.obtenirOrientationAleatoire() ;
 	//lors du premier deplacement sur la carte, les coordonnée du deplacement ne se modifient pas de la meme maniere
 	//on est oblige de separer le premier deplacement des autres
 	protected boolean aDejaBougeX = false;
@@ -249,53 +252,58 @@ public class Personnage
 	}
 
 	/**
-	 * deplace aleatoirement soit Y, soit X
-	 * @return une position avec juste des coordonnée d'une case différente
+	 *	Imite un appui de touche aléatoire
+	 * 
 	 */
-	public Position deplacementAleatoire()
+	public void deplacementAleatoire()
 	{ 
-		Position positionARenvoyer = new Position();
+		//Le boolean deuxFoisLeMemeDeplacement est a vrai, l orientation recevra forcement une orientation aleatoire
+		Orientation orientationAleatoire = Orientation.obtenirOrientationAleatoire();
 
-		boolean nombreAleatoire1 = new Random().nextBoolean() ;
-		boolean nombreAleatoire2 = new Random().nextBoolean() ;
-
-		if(nombreAleatoire1)
+		switch(orientationAleatoire)
 		{
-			if(nombreAleatoire2)
-			{
-				this.orientationPersonnage = Orientation.EST ;
-				this.estEnMouvement = true ;
-				this.numeroDirection = 3 ;
-			}
-			else
-			{
-				this.orientationPersonnage = Orientation.OUEST ;
-				this.estEnMouvement = true ;
-				this.numeroDirection = 1 ;
-			}
-		}
-		else
+		case NORD : 
 		{
-			if(nombreAleatoire2)
-			{
-				this.orientationPersonnage = Orientation.SUD ;
-				this.estEnMouvement = true ;
-				this.numeroDirection = 2 ;
-			}
-			else
-			{
-				this.orientationPersonnage = Orientation.NORD ;
-				this.estEnMouvement = true ;
-				this.numeroDirection = 0 ;
-			}
-		}
-		return positionARenvoyer ;
+			this.orientationPersonnage = Orientation.NORD ;
+			this.estEnMouvement = true ;
+			this.numeroDirection = 0 ;
 
+		}
+		break;
+		case EST : 
+		{
+			this.orientationPersonnage = Orientation.EST ;
+			this.estEnMouvement = true ;
+			this.numeroDirection = 3 ;
+		}
+		break ;	
+		case OUEST:
+		{
+			this.orientationPersonnage = Orientation.OUEST ;
+			this.estEnMouvement = true ;
+			this.numeroDirection = 1 ;
+		}
+		break;
+		case SUD:
+		{
+			this.orientationPersonnage = Orientation.SUD ;
+			this.estEnMouvement = true ;
+			this.numeroDirection = 2 ;
+		}
+		break;
+		default:
+			break;
+
+		}
 
 	}
 
 
-	// Quand on appui sur la touche, il enregistre un deplacement alors que c'est un changement d'orientation
+	/**
+	 * Permet de deplacer un personnage suivant :
+	 * sa position, estEnMouvement, son orientation
+	 * @param delta temps du jeu
+	 */
 	public void  deplacementDUneCase(int delta)
 	{
 		float futurePositionX = this.x ;
@@ -311,8 +319,6 @@ public class Personnage
 			//Il ne faut pas que ca se produise direct
 			//Sur la version precedente, on ne se deplacement des le premier mouvement du clavier
 			//refaire une condition avec un autre booleen aDejaBouge
-
-
 
 			if((int)futurePositionY <= (int)this.caseAAtteindreYNord)
 			{
@@ -335,6 +341,7 @@ public class Personnage
 					//les coordonnée de la case a atteindre sud ne change pas du coup
 					this.aDejaBougeY = true;
 					this.premierChangementDirection = true;
+
 				}
 
 			}	
@@ -351,18 +358,19 @@ public class Personnage
 			{
 				if(this.aDejaBougeX)
 				{
-					
+
 					this.caseAAtteindreXEst -= 32;
 					this.caseAAtteindreXOuest -= 32;
 					this.x =this.caseAAtteindreXEst;
 					this.estEnMouvement = false ;
 					return;
-				}
+				}	
 				else
 				{
 					this.estEnMouvement = false ;
 					this.caseAAtteindreXOuest -= 32;
 					this.aDejaBougeX = true ;
+					this.premierChangementDirection = true;
 				}
 			}
 		}
@@ -377,7 +385,7 @@ public class Personnage
 			{
 				if(this.aDejaBougeY)
 				{
-					
+
 					this.caseAAtteindreYNord += 32;
 					this.caseAAtteindreYSud += 32 ;
 					this.y =this.caseAAtteindreYNord;
@@ -389,7 +397,8 @@ public class Personnage
 				{
 					this.estEnMouvement = false ;
 					this.caseAAtteindreYSud += 32;
-					this.aDejaBougeY = true;;
+					this.aDejaBougeY = true;
+					this.premierChangementDirection = true;
 				}
 			}	
 		}
@@ -404,7 +413,7 @@ public class Personnage
 			{
 				if(this.aDejaBougeX)
 				{
-					
+
 					this.caseAAtteindreXEst += 32;
 					this.caseAAtteindreXOuest += 32;
 					this.x =this.caseAAtteindreXOuest;
@@ -416,6 +425,7 @@ public class Personnage
 					this.estEnMouvement = false ;
 					this.caseAAtteindreXEst += 32;
 					this.aDejaBougeX = true ;
+					this.premierChangementDirection = true;
 				}
 
 			}
