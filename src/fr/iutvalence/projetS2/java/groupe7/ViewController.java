@@ -1,5 +1,6 @@
 package fr.iutvalence.projetS2.java.groupe7;
 
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.GameState;
@@ -22,9 +23,25 @@ public class ViewController extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer gameContainer)
-			throws SlickException {
+			throws SlickException 
+			{
 
 		this.addState((GameState) new DeplacementState());
 		//this.addState(new GamePlayState(COMBATSTATE));
+			}
+	
+	public static void main(String[] args)
+	{
+		try
+		{
+			AppGameContainer app = new AppGameContainer(new ViewController());
+			app.setDisplayMode(DeplacementState.LARGEUR_MAP, DeplacementState.HAUTEUR_MAP, false);
+			app.setShowFPS(false);
+			app.start();
+		}
+		catch (SlickException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
