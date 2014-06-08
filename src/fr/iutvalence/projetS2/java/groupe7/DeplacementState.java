@@ -96,6 +96,8 @@ public class DeplacementState extends BasicGameState
 			System.exit(0);
 		}
 	}
+	
+	
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
@@ -181,6 +183,7 @@ public class DeplacementState extends BasicGameState
 		//delta = 1 milisecondes
 				this.time += delta ;
 				//TODO Creer une methode qui permet de creer un decalage du nombre de seconde souhaite (decoupe delta en un modulo)
+				
 				if(this.time % 2500 == 0)
 				{
 					this.uneSecondeEcoulee = true ;
@@ -207,6 +210,8 @@ public class DeplacementState extends BasicGameState
 						this.zombies[i].deplacementDUneCase(delta);
 					}
 				}
+				
+				
 				if (this.joueur.estEnMouvement)
 				{	
 					this.joueur.deplacementDUneCase(delta);

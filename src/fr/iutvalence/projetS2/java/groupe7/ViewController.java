@@ -26,8 +26,8 @@ public class ViewController extends StateBasedGame {
 			throws SlickException 
 			{
 
-		this.addState((GameState) new DeplacementState());
-		//this.addState(new GamePlayState(COMBATSTATE));
+		this.addState(new DeplacementState());
+	//	this.addState(new  CombatState());
 			}
 	
 	public static void main(String[] args)

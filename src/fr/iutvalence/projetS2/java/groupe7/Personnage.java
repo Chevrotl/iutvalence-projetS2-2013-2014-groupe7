@@ -298,6 +298,19 @@ public class Personnage
 
 	}
 
+	
+	public void deplacementFluide(int delta)
+	{
+		
+		//TODO Reimplementer blocage mur et keyRelased
+		switch (this.orientationPersonnage) 
+		{
+        case NORD: this.y -= .1f * delta; break;
+        case OUEST: this.x -= .1f * delta; break;
+        case SUD: this.y += .1f * delta; break;
+        case EST: this.x += .1f * delta; break;
+		}
+	}
 
 	/**
 	 * Permet de deplacer un personnage suivant :
