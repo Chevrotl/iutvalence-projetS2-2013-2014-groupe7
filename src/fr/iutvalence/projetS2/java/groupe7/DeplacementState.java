@@ -49,6 +49,8 @@ public class DeplacementState extends BasicGameState
 	private boolean uneSecondeEcoulee = false ;
 	private int nombreSecondeEcoulee = 0 ;
 
+	private boolean cercleCombat = false ;
+
 //	public DeplacementState()
 //	{
 //		super("Jeux");
@@ -92,6 +94,10 @@ public class DeplacementState extends BasicGameState
 		case Input.KEY_F2:
 			this.debogueurActive = !this.debogueurActive ;
 			break;
+		case Input.KEY_A:
+			this.cercleCombat = !this.cercleCombat ;
+			break;
+			
 		case Input.KEY_ESCAPE:
 			System.exit(0);
 		}
@@ -172,6 +178,15 @@ public class DeplacementState extends BasicGameState
 					g.drawString("caseBloquee : "+this.joueur.estUneCaseInterdite(this.joueur.x,this.joueur.y), this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+220);
 
 
+				}
+				
+				if(this.cercleCombat)
+				{
+//					g.fillOval(this.joueur.x, this.joueur.y, 128, 128, 20);
+					g.setColor((new Color(0, 0, 0, 0)));
+					g.fillRect(this.joueur.x-800, this.joueur.y-500, 1600, 1200);
+					g.setColor((new Color(0, 0, 0)));
+					g.fillRoundRect(this.joueur.x, this.joueur.y, 128, 128, 5);
 				}
 
 		
