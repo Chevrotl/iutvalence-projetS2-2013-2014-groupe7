@@ -298,18 +298,36 @@ public class Personnage
 
 	}
 
-	
+
+	/**
+	 * Gere le deplacement fluide d'un personnage sur une carte
+	 * (a besoin d'etre arreter)
+	 * @param delta temps du jeu
+	 */
 	public void deplacementFluide(int delta)
 	{
+
+		float futurePositionX = this.x ;
+		float futurePositionY = this.y ;
 		
-		//TODO Reimplementer blocage mur et keyRelased
+		
 		switch (this.orientationPersonnage) 
 		{
-        case NORD: this.y -= .1f * delta; break;
-        case OUEST: this.x -= .1f * delta; break;
-        case SUD: this.y += .1f * delta; break;
-        case EST: this.x += .1f * delta; break;
+		case NORD: futurePositionY -= .1f * delta; break;
+		case OUEST: futurePositionX -= .1f * delta; break;
+		case SUD: futurePositionY += .1f * delta; break;
+		case EST: futurePositionX += .1f * delta; break;
 		}
+		if (!estUneCaseInterdite(futurePositionX, futurePositionY))
+		{
+			this.x = futurePositionX;
+			this.y = futurePositionY;
+		}
+		else
+		{
+			this.estEnMouvement = false;
+		}
+		
 	}
 
 	/**

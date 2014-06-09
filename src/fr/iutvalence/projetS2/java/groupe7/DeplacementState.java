@@ -51,12 +51,6 @@ public class DeplacementState extends BasicGameState
 
 	private boolean cercleCombat = false ;
 
-//	public DeplacementState()
-//	{
-//		super("Jeux");
-//
-//	}
-
 	public static TiledMap getMap()
 	{
 		return map;
@@ -103,7 +97,13 @@ public class DeplacementState extends BasicGameState
 		}
 	}
 	
-	
+	/**
+	 * Methode qui gere le relachement d'une touche
+	 */
+	public void keyReleased(int key, char c)
+	{
+		this.joueur.estEnMouvement = false ;
+	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
@@ -128,7 +128,7 @@ public class DeplacementState extends BasicGameState
 				// joueur
 				g.translate(-LARGEUR_MAP, -2 * HAUTEUR_MAP);
 
-				this.joueur.doitTranslate();
+				this.joueur.doitTranslate(); 
 				g.translate(this.joueur.getNombreTranslateHorizontal()*LARGEUR_MAP, this.joueur.getNombreTranslateVertical()*HAUTEUR_MAP);
 
 
@@ -226,10 +226,11 @@ public class DeplacementState extends BasicGameState
 					}
 				}
 				
+				//Le deplacement est fluide, case par case pour le combat
 				
 				if (this.joueur.estEnMouvement)
 				{	
-					this.joueur.deplacementDUneCase(delta);
+					this.joueur.deplacementFluide(delta);
 				}
 		
 	}
