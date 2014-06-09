@@ -1,5 +1,7 @@
 package fr.iutvalence.projetS2.java.groupe7;
 
+import java.nio.file.attribute.PosixFilePermissions;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -177,6 +179,18 @@ public class DeplacementState extends BasicGameState
 					g.drawString("OrientationPersonnage : "+this.joueur.getOrientationPersonnage(), this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+200); 
 					g.drawString("caseBloquee : "+this.joueur.estUneCaseInterdite(this.joueur.x,this.joueur.y), this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+220);
 
+					g.drawString("positionCaseRelativeX : "+this.obtenirPositionCaseRelative(this.joueur.x,this.joueur.y).X, this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+240);
+					g.drawString("positionCaseRelativeY : "+this.obtenirPositionCaseRelative(this.joueur.x,this.joueur.y).Y, this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+260);
+					
+					g.drawString("positionCaseParCaseX : "+this.obtenirPositionCaseParCase(
+							this.obtenirPositionCaseRelative(this.joueur.x,this.joueur.y).X,
+							this.obtenirPositionCaseRelative(this.joueur.x,this.joueur.y).Y).X, this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+280);
+					
+
+					g.drawString("positionCaseParCaseY : "+this.obtenirPositionCaseParCase(
+							this.obtenirPositionCaseRelative(this.joueur.x,this.joueur.y).X,
+							this.obtenirPositionCaseRelative(this.joueur.x,this.joueur.y).Y).Y, this.joueur.getCoordonneeMurOuest()+20, this.joueur.getCoordonneeMurNord()+300);
+					
 
 				}
 				
@@ -199,7 +213,7 @@ public class DeplacementState extends BasicGameState
 				this.time += delta ;
 				//TODO Creer une methode qui permet de creer un decalage du nombre de seconde souhaite (decoupe delta en un modulo)
 				
-				if(this.time % 2500 == 0)
+				if(this.time % 2000 == 0)
 				{
 					this.uneSecondeEcoulee = true ;
 					this.nombreSecondeEcoulee++ ;
@@ -243,5 +257,23 @@ public class DeplacementState extends BasicGameState
 	}
 
 
+	
+	 public Position obtenirPositionCaseParCase(float positionX, float positionY)
+	 {
+		 Position positionARenvoyer = new Position() ;
+		 positionARenvoyer.X = positionX*32 ; 
+		 positionARenvoyer.Y = positionY*32 ;
+		 return positionARenvoyer ;
+	 }
+	 
+	 public Position obtenirPositionCaseRelative(float positionX, float positionY)
+	 {
+		 Position positionARenvoyer = new Position() ;
+		 positionARenvoyer.X = positionX/32 ; 
+		 positionARenvoyer.Y = positionY/32 ;
+		 positionARenvoyer.X = (int)positionARenvoyer.X ;
+		 positionARenvoyer.Y = (int)positionARenvoyer.Y ;
+		 return positionARenvoyer ;
+	 }
 
 }
